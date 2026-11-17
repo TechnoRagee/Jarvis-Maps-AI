@@ -331,9 +331,16 @@ def run_job(
 ) -> list[dict]:
     def log(message: str, tag: str = "normal") -> None:
         prefix = f"[{job['amenity']}/{job['area']}]"
-        print(f"{prefix} {message}")
+        full_msg = f"{prefix} {message}"
+        print(full_msg)
+        try:
+            log_file = chunks_dir.parent / "bulk_run.log"
+            with open(log_file, "a", encoding="utf-8") as f:
+                f.write(f"{datetime.utcnow().strftime('%H:%M:%S')} {full_msg}\n")
+        except Exception:
+            pass
         if log_callback:
-            log_callback(f"{prefix} {message}\n", tag)
+            log_callback(f"{full_msg}\n", tag)
 
     def update_status(message: str) -> None:
         if status_callback:
@@ -517,6 +524,12 @@ class BulkRunner:
 
     def log(self, message: str, tag: str = "normal") -> None:
         print(message)
+        try:
+            log_file = self.run_dir / "bulk_run.log"
+            with open(log_file, "a", encoding="utf-8") as f:
+                f.write(f"{datetime.utcnow().strftime('%H:%M:%S')} {message}\n")
+        except Exception:
+            pass
         if self.log_callback:
             self.log_callback(f"{message}\n", tag)
 
