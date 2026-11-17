@@ -1,16 +1,28 @@
 {
   "licenses": {
     "JM-E74B-39D9-677A-BC2A": {
-      "tier": "Pro 1-Month",
+      "tier": "Enterprise Lifetime",
       "status": "ACTIVE",
-      "max_devices": 1,
+      "max_devices": 10,
       "bound_hwids": [],
       "created_at": "2026-10-09T11:52:43.199298",
-      "expires_at": "2026-11-08T11:52:43.199298",
-      "notes": "Test Laptop",
-      "client_name": "Test Laptop",
-      "preset": "1_month",
-      "duration_display": "1 Month"
+      "expires_at": "2035-12-31T23:59:59.000000",
+      "notes": "Official Production License Key",
+      "client_name": "Production Workstation",
+      "preset": "lifetime",
+      "duration_display": "Lifetime Access"
+    },
+    "JM-PRO9-88AA-77BB-66CC": {
+      "tier": "Enterprise Lifetime",
+      "status": "ACTIVE",
+      "max_devices": 10,
+      "bound_hwids": [],
+      "created_at": "2026-11-17T00:00:00.000000",
+      "expires_at": "2035-12-31T23:59:59.000000",
+      "notes": "Secondary Enterprise Key",
+      "client_name": "Enterprise Client",
+      "preset": "lifetime",
+      "duration_display": "Lifetime Access"
     }
   },
   "blocked_ips": {},

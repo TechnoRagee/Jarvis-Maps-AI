@@ -120,8 +120,8 @@ def get_license_server_urls() -> list[str]:
     if cached_server and cached_server not in urls:
         urls.append(cached_server)
 
-    # 4. Standard defaults (Host LAN and Localhost fallback)
-    for fallback in ("http://192.168.1.244:8081", "http://localhost:8081"):
+    # 4. Standard defaults (Production Cloud, Host LAN, and Localhost fallback)
+    for fallback in ("https://jarvis-maps-ai.onrender.com", "http://192.168.1.244:8081", "http://localhost:8081"):
         if fallback not in urls:
             urls.append(fallback)
 
