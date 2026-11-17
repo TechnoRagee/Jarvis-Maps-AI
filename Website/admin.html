@@ -575,7 +575,7 @@
 
         <div class="form-group" style="text-align: left;">
           <label class="form-label" for="admin-server-url">License Server Endpoint</label>
-          <input type="text" id="admin-server-url" class="form-input" value="http://localhost:8081" required>
+          <input type="text" id="admin-server-url" class="form-input" value="https://jarvis-maps-ai.onrender.com" required>
         </div>
 
         <div id="auth-error-msg" style="color: #fb7185; font-size: 0.82rem; margin-bottom: 14px; display: none;"></div>
@@ -1038,7 +1038,7 @@
   <script>
     // Configuration & State
     let adminSecret = sessionStorage.getItem("JARVIS_ADMIN_KEY") || "";
-    const defaultServerUrl = `${window.location.protocol}//${window.location.hostname || "localhost"}:8081`;
+    const defaultServerUrl = "https://jarvis-maps-ai.onrender.com";
     let serverBaseUrl = sessionStorage.getItem("JARVIS_SERVER_URL") || defaultServerUrl;
     let currentMasterPasscode = "";
     let isPasscodeMasked = true;
