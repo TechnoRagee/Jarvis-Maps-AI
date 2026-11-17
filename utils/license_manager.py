@@ -297,7 +297,7 @@ def verify_online_license(key_or_password: str, server_url: str = None) -> dict:
         )
 
         try:
-            with urllib.request.urlopen(req, timeout=4) as response:
+            with urllib.request.urlopen(req, timeout=12) as response:
                 result = json.loads(response.read().decode("utf-8"))
                 result["connected_server"] = base_url
                 return result
