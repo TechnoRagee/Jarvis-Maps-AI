@@ -8,7 +8,7 @@ const RELEASE_CONFIG = {
   version: "v1.1.0-LTS",
   filename: "JarvisMapsAI_Setup_v1.1.exe",
   filesize: "411 MB",
-  sha256: "0763cf8f9946a29aea83b1ef5f032face301c3fd3065b6b0ae5772074835cd97",
+  sha256: "ef7d2b1c254bed5616b23c57aaab7b73abe50a562b4216c7ef8abe024853a878",
   downloadUrl: "https://github.com/TechnoRagee/Jarvis-Maps-AI/releases/download/v1.1.0/JarvisMapsAI_Setup_v1.1.exe",
   zipFilename: "JarvisMapsAI_Windows_x64.zip",
   zipUrl: "https://github.com/TechnoRagee/Jarvis-Maps-AI/releases/download/v1.1.0/JarvisMapsAI_Setup_v1.1.exe"
