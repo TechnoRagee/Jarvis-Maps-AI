@@ -8,6 +8,14 @@ rolling online backups, trusted-proxy header validation, and brute-force rate-li
 
 import os
 import sys
+
+# Ensure repository root and server dir are in sys.path
+_CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+_REPO_ROOT = os.path.dirname(_CURRENT_DIR)
+for _p in (_REPO_ROOT, _CURRENT_DIR):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 import json
 import time
 import secrets
@@ -17,13 +25,22 @@ from datetime import datetime, timedelta
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import urllib.parse
 
-from server.db import (
-    get_db_connection,
-    init_schema,
-    migrate_from_json_if_needed,
-    backup_sqlite_database
-)
-from server.config import get_admin_secret_key
+try:
+    from server.db import (
+        get_db_connection,
+        init_schema,
+        migrate_from_json_if_needed,
+        backup_sqlite_database
+    )
+    from server.config import get_admin_secret_key
+except ImportError:
+    from db import (
+        get_db_connection,
+        init_schema,
+        migrate_from_json_if_needed,
+        backup_sqlite_database
+    )
+    from config import get_admin_secret_key
 
 # Logging Configuration
 logging.basicConfig(
