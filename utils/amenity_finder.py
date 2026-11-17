@@ -1190,7 +1190,18 @@ anchors.forEach(function (a) {
         // Accept typical categories (alphabetic, short) OR hotel star ratings (e.g. "3-star hotel", "4-star hotel", "5-star hotel", "7-star hotel")
         const isStarHotel = /^[1-7]\s*[-]?\s*star\s*hotel/i.test(seg);
         if (!catCandidate && ((!/\d/.test(seg) && /[a-zA-Z\u0900-\u097F]/.test(seg)) || isStarHotel) && seg.length < 50) {
-          catCandidate = seg;
+          if (isStarHotel) {
+            const m = seg.match(/^[1-7]\s*[-]?\s*star\s*hotel/i);
+            catCandidate = m ? m[0] : seg;
+          } else if (/^hotel[A-Z\s]/i.test(seg) && seg.length > 15) {
+            catCandidate = "Hotel";
+          } else if (/^restaurant[A-Z\s]/i.test(seg) && seg.length > 15) {
+            catCandidate = "Restaurant";
+          } else if (/^holiday home[A-Z\s]/i.test(seg) && seg.length > 20) {
+            catCandidate = "Holiday home";
+          } else {
+            catCandidate = seg;
+          }
         } else if (!addrCandidate && (/\d/.test(seg) || seg.includes(",") || seg.length > 8)) {
           addrCandidate = seg;
         } else if (!addrCandidate && seg.length >= 3 && seg !== catCandidate) {
@@ -2281,7 +2292,11 @@ CATEGORY_SYNONYMS = {
     "supermarket": ("supermarket", "grocery", "grocery store"),
     "convenience_store": ("convenience store", "grocery", "general store"),
     "gym": ("gym", "fitness", "fitness center", "fitness centre"),
-    "hotel": ("hotel", "lodging", "inn"),
+    "hotel": (
+        "hotel", "lodging", "inn", "star hotel", "resort", "resort hotel",
+        "motel", "guest house", "boutique hotel", "heritage hotel", "budget hotel",
+        "palace hotel", "grand hotel", "suites", "extended stay hotel",
+    ),
     "guest_house": ("guest house", "lodging", "guesthouse"),
     "school": ("school",),
     "college": ("college", "institute"),
@@ -2479,17 +2494,26 @@ CATEGORY_SYNONYMS = {
         "1 star hotel", "2 star hotel", "3 star hotel", "4 star hotel", "5 star hotel", "7 star hotel",
         "star hotel", "boutique hotel", "business hotel", "extended stay hotel",
     ),
-    "motel": ("motel", "motor inn", "highway hotel", "lodging", "inn"),
-    "hostel": ("hostel", "youth hostel", "backpackers hostel", "student hostel", "dormitory"),
-    "guest_house": ("guest house", "lodging", "guesthouse", "bed and breakfast"),
-    "resort": ("resort", "resort hotel", "holiday resort", "wellness resort"),
-    "lodge": ("lodge", "lodging", "safari lodge", "mountain lodge", "guest house"),
+    "motel": ("motel", "motor inn", "highway hotel", "lodging", "inn", "hotel", "budget hotel", "roadside hotel", "guest house"),
+    "hostel": ("hostel", "youth hostel", "backpackers hostel", "student hostel", "dormitory", "backpacker hostel"),
+    "guest_house": ("guest house", "lodging", "guesthouse", "bed and breakfast", "homestay", "home stay", "inn", "lodge", "holiday home", "hotel"),
+    "resort": ("resort", "resort hotel", "holiday resort", "wellness resort", "nature resort", "spa resort", "hotel"),
+    "lodge": ("lodge", "lodging", "safari lodge", "mountain lodge", "guest house", "hotel", "inn"),
     "dharamshala": ("dharamshala", "dharmashala", "ashram", "pilgrim hostel", "sarai", "guest house", "place of worship"),
-    "homestay": ("homestay", "bed and breakfast", "guest house", "farmstay", "cottage", "village stay"),
-    "serviced_apartment": ("serviced apartment", "extended stay hotel", "holiday apartment", "apartment hotel", "apartment"),
-    "farmhouse_resort": ("resort hotel", "resort", "farmstay", "retreat center", "farmhouse", "agro tourism"),
-    "bed_and_breakfast": ("bed & breakfast", "bed and breakfast", "inn", "guesthouse", "b&b"),
-    "dormitory": ("dormitory", "hostel", "student dormitory", "dorm"),
+    "homestay": (
+        "homestay", "home stay", "home-stay", "bed and breakfast", "bed & breakfast",
+        "guest house", "farmstay", "cottage", "village stay", "holiday home",
+        "holiday apartment", "holiday apartment rental", "vacation home", "chalet",
+        "b&b", "stay", "farmhouse", "resort",
+    ),
+    "serviced_apartment": ("serviced apartment", "extended stay hotel", "holiday apartment", "apartment hotel", "apartment", "suites"),
+    "farmhouse_resort": ("resort hotel", "resort", "farmstay", "retreat center", "farmhouse", "agro tourism", "holiday home"),
+    "bed_and_breakfast": (
+        "bed & breakfast", "bed and breakfast", "inn", "guesthouse", "guest house",
+        "b&b", "homestay", "home stay", "boutique hotel", "hotel", "lodging",
+        "holiday home", "cottage", "chalet", "resort hotel", "resort",
+    ),
+    "dormitory": ("dormitory", "hostel", "student dormitory", "dorm", "backpacker hostel", "youth hostel", "co living", "pg"),
     "luxury_hotel": (
         "5 star hotel", "4 star hotel", "luxury hotel", "boutique hotel",
         "palace hotel", "grand hotel", "hotel", "resort hotel",
@@ -2516,7 +2540,8 @@ CATEGORY_SYNONYMS = {
     ),
     "service_villa": (
         "service villa", "serviced villa", "holiday villa",
-        "farmhouse", "villa", "homestay",
+        "farmhouse", "villa", "homestay", "home stay", "holiday home",
+        "house", "apartment", "cottage", "vacation home", "chalet",
     ),
     "ashram_stay": (
         "ashram", "spiritual retreat", "yoga ashram", "meditation center",
@@ -2949,6 +2974,9 @@ def _is_noise_category(category: str) -> bool:
     if _looks_like_action_label(category):
         return True
     if clean in CATEGORY_NOISE:
+        return True
+    # Pure rating strings e.g. "4.7 stars" or "4 7 stars" (ratings without hotel keyword)
+    if "star" in clean and any(c.isdigit() for c in clean) and "hotel" not in clean:
         return True
     # Bare numbers, prices, or star counts.
     if not any(character.isalpha() for character in clean):
