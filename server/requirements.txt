@@ -1,0 +1,3 @@
+# Jarvis Maps AI — Cloud License Server Requirements
+# Pure standard library (http.server, sqlite3, json, hashlib, hmac)
+# No external C-dependencies needed for ultra-fast cloud deployment
