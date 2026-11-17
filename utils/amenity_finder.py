@@ -2666,10 +2666,11 @@ NAME_CONFLICT_WORDS = (
 TYPE_FAMILIES = {
     "lodging": (
         "hotel", "inn", "lodge", "motel", "resort", "hostel",
-        "guest house", "guesthouse", "dormitory", "homestay",
+        "guest house", "guesthouse", "dormitory", "homestay", "home stay",
         "serviced apartment", "bed and breakfast", "farmhouse",
         "villa", "cottage", "dharamshala", "ashram", "paying guest",
         "pg", "co living", "campground", "camping", "glamping", "chalet",
+        "apartment", "house", "holiday home", "holiday apartment", "stay",
     ),
     "aviation": ("airport", "airstrip", "aerodrome", "airfield", "heliport"),
     "food": (
@@ -2990,14 +2991,26 @@ def _hit_category(amenity: str, category: str) -> bool:
     if not clean_category:
         return False
 
-    for synonym in CATEGORY_SYNONYMS.get(_amenity_key(amenity), ()):
+    amen_key = _amenity_key(amenity)
+    for synonym in CATEGORY_SYNONYMS.get(amen_key, ()):
         if _normalise(synonym) in clean_category:
             return True
 
     tokens = [t for t in _normalise(amenity.replace("_", " ")).split() if t]
-    return bool(tokens) and all(
-        token in clean_category for token in tokens
-    )
+    if bool(tokens) and all(token in clean_category for token in tokens):
+        return True
+
+    # 100% Lead Recovery: Family-Level Category Matching
+    # If the searched amenity belongs to a known family (e.g. "lodging", "medical"),
+    # any result returned by Google Maps whose category belongs to that same family
+    # is an authorized match and is preserved.
+    family = AMENITY_FAMILY.get(amen_key)
+    if family:
+        for kw in TYPE_FAMILIES.get(family, ()):
+            if _normalise(kw) in clean_category:
+                return True
+
+    return False
 
 
 def _category_matches(

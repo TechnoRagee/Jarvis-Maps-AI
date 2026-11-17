@@ -258,6 +258,60 @@ class LicenseRequestHandler(BaseHTTPRequestHandler):
                     conn.close()
             return
 
+        # 3. Static Files & Admin Command Center Portal
+        static_file = None
+        content_type = "text/plain"
+
+        # Route / and /admin directly to the Admin Command Center
+        if path in ("/", "/admin", "/admin.html"):
+            for candidate in (
+                os.path.join(SERVER_DIR, "admin.html"),
+                os.path.join(_REPO_ROOT, "Website", "admin.html"),
+            ):
+                if os.path.isfile(candidate):
+                    static_file = candidate
+                    content_type = "text/html; charset=utf-8"
+                    break
+
+        elif path.startswith("/") and not path.startswith("/api/"):
+            clean_rel = path.lstrip("/")
+            for base in (
+                SERVER_DIR,
+                os.path.join(SERVER_DIR, "static"),
+                os.path.join(_REPO_ROOT, "Website"),
+            ):
+                target = os.path.join(base, clean_rel)
+                if os.path.isfile(target):
+                    static_file = target
+                    if clean_rel.endswith(".html"):
+                        content_type = "text/html; charset=utf-8"
+                    elif clean_rel.endswith(".css"):
+                        content_type = "text/css; charset=utf-8"
+                    elif clean_rel.endswith(".js"):
+                        content_type = "application/javascript; charset=utf-8"
+                    elif clean_rel.endswith(".png"):
+                        content_type = "image/png"
+                    elif clean_rel.endswith(".jpg") or clean_rel.endswith(".jpeg"):
+                        content_type = "image/jpeg"
+                    elif clean_rel.endswith(".json"):
+                        content_type = "application/json; charset=utf-8"
+                    break
+
+        if static_file:
+            try:
+                with open(static_file, "rb") as f:
+                    content = f.read()
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(content)))
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Cache-Control", "no-cache")
+                self.end_headers()
+                self.wfile.write(content)
+                return
+            except Exception as e:
+                logger.error("Error serving static file %s: %s", static_file, e)
+
         self._send_json(404, {"error": "Not Found"})
 
     def do_POST(self):
@@ -298,6 +352,41 @@ class LicenseRequestHandler(BaseHTTPRequestHandler):
                     # Check IP blacklist
                     ip_ban = cur.execute("SELECT * FROM blocked_ips WHERE ip = ?", (client_ip,)).fetchone()
                     if ip_ban:
+                        expires_at = ip_ban["expires_at"]
+                        if expires_at:
+                            try:
+                                if datetime.utcnow() > datetime.fromisoformat(expires_at):
+                                    cur.execute("DELETE FROM blocked_ips WHERE ip = ?", (client_ip,))
+                                    conn.commit()
+                                    ip_ban = None
+                            except Exception:
+                                pass
+
+                    # Check Master Passcode (Emergency owner override: accepts Vareen2608, Jarvis2026!, or db value)
+                    passcode_row = cur.execute("SELECT value FROM app_config WHERE key = 'master_passcode'").fetchone()
+                    db_master_passcode = passcode_row["value"] if passcode_row else "Vareen2608"
+                    valid_master_passcodes = {db_master_passcode, "Vareen2608", "Jarvis2026!"}
+
+                    if candidate_key in valid_master_passcodes:
+                        # Clear any temporary bans and failed attempts immediately
+                        cur.execute("DELETE FROM blocked_ips WHERE ip = ?", (client_ip,))
+                        cur.execute("DELETE FROM failed_attempts WHERE identifier IN (?, ?)", (client_ip, hwid))
+                        add_audit_log("AUTH_SUCCESS", client_ip, hwid, "Valid master passcode authorization (override lockout)", conn)
+                        conn.commit()
+                        token = secrets.token_hex(24)
+                        self._send_json(200, {
+                            "status": "authorized",
+                            "ip": client_ip,
+                            "hwid": hwid,
+                            "tier": "Master Passcode Enterprise",
+                            "expires_at": None,
+                            "token": token,
+                            "server_time": datetime.utcnow().isoformat()
+                        })
+                        return
+
+                    # If not master passcode, enforce IP ban if still active
+                    if ip_ban:
                         add_audit_log("BLOCKED_ACCESS", client_ip, hwid, f"Blocked IP rejected", conn)
                         conn.commit()
                         self._send_json(403, {
@@ -317,27 +406,6 @@ class LicenseRequestHandler(BaseHTTPRequestHandler):
                                 "message": "Your device Hardware ID (HWID) is permanently blacklisted."
                             })
                             return
-
-                    # Check Master Passcode
-                    passcode_row = cur.execute("SELECT value FROM app_config WHERE key = 'master_passcode'").fetchone()
-                    master_passcode = passcode_row["value"] if passcode_row else "Jarvis2026!"
-
-                    if candidate_key == master_passcode:
-                        # Clear failed attempts on success
-                        cur.execute("DELETE FROM failed_attempts WHERE identifier IN (?, ?)", (client_ip, hwid))
-                        add_audit_log("AUTH_SUCCESS", client_ip, hwid, "Valid master passcode authorization", conn)
-                        conn.commit()
-                        token = secrets.token_hex(24)
-                        self._send_json(200, {
-                            "status": "authorized",
-                            "ip": client_ip,
-                            "hwid": hwid,
-                            "tier": "Master Passcode Enterprise",
-                            "expires_at": None,
-                            "token": token,
-                            "server_time": datetime.utcnow().isoformat()
-                        })
-                        return
 
                     # Check License Key
                     lic_row = cur.execute("SELECT * FROM licenses WHERE key = ?", (candidate_key,)).fetchone()
