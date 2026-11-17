@@ -8,11 +8,10 @@ const RELEASE_CONFIG = {
   version: "v1.1.0-LTS",
   filename: "JarvisMapsAI_Setup_v1.1.exe",
   filesize: "411 MB",
-  sha256: "02bf3c86ca72a3b7bc70c513d472d07d1d215ae6dc6b55de5020f25328b20ec3",
   sha256: "0763cf8f9946a29aea83b1ef5f032face301c3fd3065b6b0ae5772074835cd97",
-  downloadUrl: "JarvisMapsAI_Setup_v1.1.exe",
+  downloadUrl: "https://github.com/TechnoRagee/Jarvis-Maps-AI/releases/download/v1.1.0/JarvisMapsAI_Setup_v1.1.exe",
   zipFilename: "JarvisMapsAI_Windows_x64.zip",
-  zipUrl: "JarvisMapsAI_Windows_x64.zip"
+  zipUrl: "https://github.com/TechnoRagee/Jarvis-Maps-AI/releases/download/v1.1.0/JarvisMapsAI_Setup_v1.1.exe"
 };
 
 // 1. Router System
