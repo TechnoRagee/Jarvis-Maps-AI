@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Command Center — Jarvis Maps AI</title>
+  <link rel="icon" type="image/png" href="Jarvis Map AI.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Admin Specific Styling */
+    .admin-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px 24px 80px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--glass-border);
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .admin-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .admin-badge {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(244, 63, 94, 0.05));
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fb7185;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .admin-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--glass-fill);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      backdrop-filter: blur(16px);
+      transition: var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .stat-card:hover {
+      border-color: var(--glass-border-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-val {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-sub {
+      font-size: 0.78rem;
+      color: var(--text-subtle);
+    }
+
+    /* ============================================================== */
+    /* FOLDER TABS NAVIGATION                                         */
+    /* ============================================================== */
+    .tab-folder-wrapper {
+      margin-bottom: 32px;
+    }
+
+    .admin-tab-nav {
+      display: flex;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0 4px;
+    }
+
+    .admin-tab-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .admin-tab-btn {
+      background: rgba(18, 22, 34, 0.7);
+      border: 1px solid var(--glass-border);
+      border-bottom: none;
+      color: var(--text-muted);
+      padding: 14px 22px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      position: relative;
+      margin-bottom: -1px;
+    }
+
+    .admin-tab-btn:hover {
+      color: #fff;
+      background: rgba(28, 35, 54, 0.85);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .admin-tab-btn.active {
+      color: #fff;
+      background: var(--bg-surface-elevated);
+      border-color: rgba(99, 102, 241, 0.45);
+      border-bottom: 1px solid var(--bg-surface-elevated); /* Merges seamlessly into folder card */
+      box-shadow: 0 -4px 20px rgba(99, 102, 241, 0.18);
+      z-index: 3;
+    }
+
+    .admin-tab-btn.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 14px;
+      right: 14px;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #06b6d4);
+      border-radius: 3px 3px 0 0;
+    }
+
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .admin-tab-btn.active .tab-badge {
+      background: rgba(99, 102, 241, 0.25);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+    }
+
+    .tab-badge-warn {
+      background: rgba(244, 63, 94, 0.2) !important;
+      color: #fb7185 !important;
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+
+    /* Tab Folder Content Body */
+    .admin-tab-folder-body {
+      background: var(--bg-surface-elevated);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: 0 16px 16px 16px;
+      padding: 30px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(24px);
+      min-height: 480px;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: tabFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes tabFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Cards inside Tab Folder */
+    .tab-header-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--glass-border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tab-header-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-card {
+      background: var(--glass-fill);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      backdrop-filter: blur(20px);
+    }
+
+    .admin-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .admin-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-sub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .admin-sub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      background: rgba(13, 17, 28, 0.75);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      color: #fff;
+      font-size: 0.92rem;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--indigo-primary);
+      box-shadow: 0 0 0 3px var(--indigo-glow);
+    }
+
+    /* Duration Preset Buttons */
+    .preset-selector {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .preset-selector {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .preset-btn {
+      background: rgba(19, 24, 38, 0.8);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 10px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--indigo-light);
+      color: #fff;
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    .preset-btn.active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.2));
+      border-color: var(--indigo-primary);
+      color: #fff;
+      box-shadow: 0 0 12px var(--indigo-glow);
+    }
+
+    .preset-btn .preset-duration {
+      font-size: 0.7rem;
+      color: var(--text-subtle);
+    }
+
+    .preset-btn.active .preset-duration {
+      color: var(--cyan-light);
+    }
+
+    /* Generated Key Alert Box */
+    .key-output-box {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .key-display {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+      word-break: break-all;
+    }
+
+    /* License Table */
+    .admin-table-container {
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .admin-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--glass-border);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .admin-table td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge-status {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-active {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    .badge-revoked {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: #fb7185;
+    }
+
+    .badge-expired {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+    }
+
+    .action-btn-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .action-mini-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .action-mini-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .action-mini-btn.btn-danger:hover {
+      background: rgba(244, 63, 94, 0.25);
+      border-color: rgba(244, 63, 94, 0.5);
+      color: #fca5a5;
+    }
+
+    .action-mini-btn.btn-warn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      border-color: rgba(245, 158, 11, 0.5);
+      color: #fde68a;
+    }
+
+    /* Auth Overlay Modal */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 9, 14, 0.94);
+      backdrop-filter: blur(24px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-box {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--glass-border-bright);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px var(--indigo-glow);
+    }
+
+    .log-stream {
+      background: #080a10;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #a7f3d0;
+      max-height: 420px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    .log-entry {
+      margin-bottom: 6px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .log-time {
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow -->
+  <div class="ambient-glow-container">
+    <div class="ambient-orb orb-indigo"></div>
+    <div class="ambient-orb orb-cyan"></div>
+    <div class="ambient-orb orb-emerald"></div>
+  </div>
+
+  <!-- AUTHENTICATION GATEWAY MODAL (Only Authorized Admin Can Pass) -->
+  <div class="auth-overlay" id="admin-auth-overlay">
+    <div class="auth-box">
+      <div style="width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 14px; background: linear-gradient(135deg, rgba(244,63,94,0.2), rgba(99,102,241,0.2)); border: 1px solid rgba(244,63,94,0.4); display: flex; align-items: center; justify-content: center;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fb7185" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: #fff; margin-bottom: 8px;">Restricted Admin Portal</h2>
+      <p style="color: var(--text-muted); font-size: 0.86rem; margin-bottom: 24px;">
+        Owner authorization required. Enter your Master Admin Secret Key to manage security passcodes and customer license keys.
+      </p>
+
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="admin-secret-input">Admin Secret Key</label>
+          <input type="password" id="admin-secret-input" class="form-input" placeholder="Enter admin secret key" required autofocus autocomplete="off">
+        </div>
+
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="admin-server-url">License Server Endpoint</label>
+          <input type="text" id="admin-server-url" class="form-input" value="http://localhost:8081" required>
+        </div>
+
+        <div id="auth-error-msg" style="color: #fb7185; font-size: 0.82rem; margin-bottom: 14px; display: none;"></div>
+
+        <button type="submit" id="auth-submit-btn" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Authenticate & Unlock
+        </button>
+      </form>
+
+      <div style="margin-top: 18px;">
+        <a href="index.html" style="color: var(--text-subtle); font-size: 0.8rem; text-decoration: none;">← Return to Main Website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN DASHBOARD (Hidden until authenticated) -->
+  <div class="admin-container" id="admin-dashboard-view" style="display: none;">
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+      <div class="admin-title-wrap">
+        <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+          <img src="Jarvis Map AI.png" alt="Logo" style="width: 36px; height: 36px; border-radius: 8px;">
+          <div>
+            <h1 style="font-family: var(--font-heading); font-size: 1.4rem; color: #fff; line-height: 1.2;">Jarvis Maps AI</h1>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Security & License Command Hub</span>
+          </div>
+        </a>
+        <span class="admin-badge">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #fb7185; display: inline-block;"></span>
+          Owner Privileged
+        </span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button onclick="refreshDashboard()" class="action-mini-btn" title="Refresh Live State">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+          Refresh Data
+        </button>
+        <a href="index.html" class="action-mini-btn" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open Website
+        </a>
+        <button onclick="lockAdmin()" class="action-mini-btn btn-danger" title="Lock & Log Out">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Lock Admin
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Stats Bar (Telemetry Overview) -->
+    <div class="admin-stat-grid">
+      <div class="stat-card" onclick="switchTab('tab-passcode')" title="Click to open Passcode Settings">
+        <div class="stat-label">
+          <span>Master Passcode</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-neon)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="stat-val" style="font-family: var(--font-mono); font-size: 1.4rem; color: var(--cyan-light);" id="stat-passcode">
+          ••••••••
+        </div>
+        <div class="stat-sub" id="stat-passcode-status">Active Model B gatekeeper</div>
+      </div>
+
+      <div class="stat-card" onclick="switchTab('tab-licenses')" title="Click to view Active Licenses">
+        <div class="stat-label">
+          <span>Active Licenses</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-verified)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="stat-val" id="stat-active-licenses">0</div>
+        <div class="stat-sub">Valid customer activations</div>
+      </div>
+
+      <div class="stat-card" onclick="switchTab('tab-licenses')" title="Click to view All Licenses">
+        <div class="stat-label">
+          <span>Total Generated</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--indigo-light)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="stat-val" id="stat-total-licenses">0</div>
+        <div class="stat-sub">Across all 5 duration tiers</div>
+      </div>
+
+      <div class="stat-card" onclick="switchTab('tab-security')" title="Click to view Blocked Attackers">
+        <div class="stat-label">
+          <span>Blocked Attackers</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--rose-accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        </div>
+        <div class="stat-val" style="color: #fb7185;" id="stat-blocked-count">0</div>
+        <div class="stat-sub">Blacklisted IPs & HWIDs</div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB FOLDER SYSTEM                                              -->
+    <!-- ============================================================== -->
+    <div class="tab-folder-wrapper">
+      <!-- Folder Tab Ears -->
+      <nav class="admin-tab-nav" role="tablist">
+        <button class="admin-tab-btn active" data-tab="tab-generator" onclick="switchTab('tab-generator')" role="tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>License Generator</span>
+          <span class="tab-badge" style="color: #34d399;">New</span>
+        </button>
+
+        <button class="admin-tab-btn" data-tab="tab-licenses" onclick="switchTab('tab-licenses')" role="tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          <span>License Registry</span>
+          <span class="tab-badge" id="tab-badge-licenses">0</span>
+        </button>
+
+        <button class="admin-tab-btn" data-tab="tab-passcode" onclick="switchTab('tab-passcode')" role="tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Master Passcode</span>
+        </button>
+
+        <button class="admin-tab-btn" data-tab="tab-security" onclick="switchTab('tab-security')" role="tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          <span>Security & Firewall</span>
+          <span class="tab-badge" id="tab-badge-blocked">0</span>
+        </button>
+
+        <button class="admin-tab-btn" data-tab="tab-audit" onclick="switchTab('tab-audit')" role="tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>Live Audit Trail</span>
+        </button>
+      </nav>
+
+      <!-- Folder Tab Body -->
+      <div class="admin-tab-folder-body">
+
+        <!-- FOLDER PANE 1: LICENSE GENERATOR -->
+        <div class="tab-pane active" id="tab-generator" role="tabpanel">
+          <div class="tab-header-banner">
+            <div>
+              <div class="tab-header-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-verified)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Generate Customer License Key
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Issue cryptographically signed keys with exact expiration durations or permanent lifetime access.</div>
+            </div>
+            <span class="pill-tag pill-emerald" style="margin: 0; font-size: 0.72rem;">Multi-Tier Generator</span>
+          </div>
+
+          <div class="admin-sub-grid">
+            <!-- Generator Form Card -->
+            <div class="admin-card">
+              <form id="key-gen-form" onsubmit="handleGenerateKey(event)">
+                <div class="form-group">
+                  <label class="form-label">Select License Duration</label>
+                  <div class="preset-selector" id="preset-selector-group">
+                    <button type="button" class="preset-btn active" data-preset="1_month" onclick="selectPreset('1_month')">
+                      <span>1 Month</span>
+                      <span class="preset-duration">30 Days</span>
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="3_months" onclick="selectPreset('3_months')">
+                      <span>3 Months</span>
+                      <span class="preset-duration">90 Days</span>
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="6_months" onclick="selectPreset('6_months')">
+                      <span>6 Months</span>
+                      <span class="preset-duration">180 Days</span>
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="12_months" onclick="selectPreset('12_months')">
+                      <span>12 Months</span>
+                      <span class="preset-duration">1 Year</span>
+                    </button>
+                    <button type="button" class="preset-btn" data-preset="lifetime" onclick="selectPreset('lifetime')">
+                      <span style="color: #34d399; font-weight: 700;">★ Lifetime</span>
+                      <span class="preset-duration">Permanent</span>
+                    </button>
+                  </div>
+                  <input type="hidden" id="selected-duration-preset" value="1_month">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px;">
+                  <div>
+                    <label class="form-label" for="license-tier">Edition / Tier</label>
+                    <select id="license-tier" class="form-select">
+                      <option value="Pro" selected>Pro Commercial</option>
+                      <option value="Enterprise">Enterprise Elite</option>
+                      <option value="Studio">Studio Edition</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" for="device-limit">Device Limit</label>
+                    <select id="device-limit" class="form-select">
+                      <option value="1">1 Device (Standard)</option>
+                      <option value="2">2 Devices</option>
+                      <option value="3">3 Devices</option>
+                      <option value="5">5 Devices (Team)</option>
+                      <option value="100">Unlimited Devices</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="client-note-input">Client Name / Order Note (Optional)</label>
+                  <input type="text" id="client-note-input" class="form-input" placeholder="e.g. Alex Johnson (alex@corp.com) - Gumroad #4812">
+                </div>
+
+                <button type="submit" id="btn-generate-key" class="btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #10b981, #06b6d4);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Generate New License Key
+                </button>
+              </form>
+
+              <!-- Newly Generated Key Alert Box -->
+              <div class="key-output-box" id="new-key-display-box">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <strong style="color: #34d399; font-size: 0.88rem;">Key Generated Successfully!</strong>
+                  <span id="gen-key-meta" style="font-size: 0.74rem; color: var(--text-muted);"></span>
+                </div>
+
+                <div class="key-display">
+                  <span id="gen-key-text">JM-XXXX-XXXX-XXXX-XXXX</span>
+                  <button class="action-mini-btn" onclick="copyGenKey()" style="background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.5); color: #fff;">
+                    Copy Key
+                  </button>
+                </div>
+
+                <div style="display: flex; gap: 8px; margin-top: 8px;">
+                  <button class="action-mini-btn" onclick="copyClientHandoverMessage()" style="width: 100%; justify-content: center; padding: 8px;">
+                    📋 Copy Complete Customer Handover Message
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Generator Info & Policy Card -->
+            <div class="admin-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div class="admin-card-header">
+                  <div class="admin-card-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-neon)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    License Duration Architecture
+                  </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.85rem; color: var(--text-muted);">
+                  <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <span style="color: #34d399; font-weight: 700;">•</span>
+                    <div><strong style="color: #fff;">1 Month (30d):</strong> Ideal for monthly subscribers or short evaluation pilots. Automatically ceases operation at midnight UTC on day 30.</div>
+                  </div>
+                  <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <span style="color: #34d399; font-weight: 700;">•</span>
+                    <div><strong style="color: #fff;">3 Months (90d):</strong> Quarterly billing tiers for commercial consulting projects and spatial analyses.</div>
+                  </div>
+                  <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <span style="color: #34d399; font-weight: 700;">•</span>
+                    <div><strong style="color: #fff;">6 Months (180d):</strong> Semi-annual enterprise subscriptions with volume node allowances.</div>
+                  </div>
+                  <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <span style="color: #34d399; font-weight: 700;">•</span>
+                    <div><strong style="color: #fff;">12 Months (1 Year):</strong> Annual commercial license. Renews yearly.</div>
+                  </div>
+                  <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <span style="color: #34d399; font-weight: 700;">•</span>
+                    <div><strong style="color: #34d399;">★ Lifetime:</strong> Permanent air-gapped license that never expires. Ideal for high-value VIP buyers.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--glass-border); font-size: 0.78rem; color: var(--text-subtle);">
+                Hardware ID (HWID) binding locks keys to the customer's PC on first activation. You can reset HWID in the <a href="javascript:void(0)" onclick="switchTab('tab-licenses')" style="color: var(--cyan-light);">License Registry</a> anytime.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOLDER PANE 2: LICENSE REGISTRY -->
+        <div class="tab-pane" id="tab-licenses" role="tabpanel">
+          <div class="tab-header-banner">
+            <div>
+              <div class="tab-header-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-neon)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                Issued License Keys Registry
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Manage all issued keys, revoke access, unbind hardware, and inspect client bindings.</div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="license-search-input" class="form-input" placeholder="Search by key, client, or tier..." style="width: 240px; padding: 8px 12px; font-size: 0.82rem;" onkeyup="filterLicensesTable()">
+              <select id="filter-status-select" class="form-select" style="width: 130px; padding: 8px 12px; font-size: 0.82rem;" onchange="filterLicensesTable()">
+                <option value="ALL">All Status</option>
+                <option value="active">Active Only</option>
+                <option value="revoked">Revoked</option>
+                <option value="expired">Expired</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="admin-table-container">
+            <table class="admin-table" id="licenses-table">
+              <thead>
+                <tr>
+                  <th>License Key</th>
+                  <th>Duration / Tier</th>
+                  <th>Client / Note</th>
+                  <th>Expiry Date</th>
+                  <th>Devices</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="licenses-table-body">
+                <tr>
+                  <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                    Loading licenses from secure database...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FOLDER PANE 3: MASTER PASSCODE -->
+        <div class="tab-pane" id="tab-passcode" role="tabpanel">
+          <div class="tab-header-banner">
+            <div>
+              <div class="tab-header-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--cyan-neon)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Master Passcode Settings
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Model B Security Gatekeeper protecting the desktop application and website access.</div>
+            </div>
+            <span class="pill-tag pill-cyan" style="margin: 0; font-size: 0.72rem;">Model B Gate</span>
+          </div>
+
+          <div class="admin-sub-grid">
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <div class="admin-card-title">Change Master Passcode</div>
+              </div>
+
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+                Updating this passcode immediately changes the master authentication gatekeeper across all connected clients and portals.
+              </p>
+
+              <form id="passcode-update-form" onsubmit="handleUpdatePasscode(event)">
+                <div class="form-group">
+                  <label class="form-label" for="current-passcode-display">Current Active Passcode</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input type="text" id="current-passcode-display" class="form-input" style="font-family: var(--font-mono); background: rgba(0,0,0,0.3);" readonly value="Loading...">
+                    <button type="button" class="action-mini-btn" onclick="togglePasscodeVisibility()" id="btn-toggle-passcode" title="Toggle Show/Hide">
+                      👁️ View
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="new-passcode-input">New Master Passcode</label>
+                  <input type="text" id="new-passcode-input" class="form-input" placeholder="e.g. JarvisSupreme2026! or custom secret" required autocomplete="off">
+                  <div style="font-size: 0.76rem; color: var(--text-subtle); margin-top: 6px;">
+                    Must be at least 4 characters. Takes effect immediately.
+                  </div>
+                </div>
+
+                <button type="submit" id="btn-update-passcode" class="btn-primary" style="width: 100%; justify-content: center;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  Save & Update Master Passcode
+                </button>
+              </form>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <div class="admin-card-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-verified)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Security Gatekeeper Protocols
+                </div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.85rem; color: var(--text-muted);">
+                <div>
+                  <strong style="color: #fff;">Zero Hardcoding:</strong>
+                  The passcode is stored and verified dynamically via the license server database (`license_db.json`).
+                </div>
+                <div>
+                  <strong style="color: #fff;">Automated Lockout:</strong>
+                  3 consecutive failed passcode attempts will permanently blacklist both the remote IP and the client device HWID.
+                </div>
+                <div>
+                  <strong style="color: #fff;">Audit Trail:</strong>
+                  Every passcode modification is logged with IP and timestamp in the live telemetry trail.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOLDER PANE 4: SECURITY & FIREWALL -->
+        <div class="tab-pane" id="tab-security" role="tabpanel">
+          <div class="tab-header-banner">
+            <div>
+              <div class="tab-header-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--rose-accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                Security Defense & Firewall Gatekeeper
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Inspect blacklisted IP addresses and machine HWIDs banned for brute-force attempts.</div>
+            </div>
+            <button class="action-mini-btn" onclick="refreshDashboard()">Refresh Blacklist</button>
+          </div>
+
+          <div class="admin-sub-grid">
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <div class="admin-card-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rose-accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                  Blacklisted IP Addresses
+                </div>
+              </div>
+              <div id="blocked-ips-list">
+                <span style="color: var(--text-muted); font-size: 0.8rem;">No IPs currently blacklisted.</span>
+              </div>
+            </div>
+
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <div class="admin-card-title">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rose-accent)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  Blacklisted Device HWIDs
+                </div>
+              </div>
+              <div id="blocked-hwids-list">
+                <span style="color: var(--text-muted); font-size: 0.8rem;">No Hardware IDs currently blacklisted.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOLDER PANE 5: LIVE AUDIT TRAIL -->
+        <div class="tab-pane" id="tab-audit" role="tabpanel">
+          <div class="tab-header-banner">
+            <div>
+              <div class="tab-header-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-verified)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Real-Time Security Audit Trail
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Cryptographic telemetry stream of key issuances, revocations, HWID resets, and auth events.</div>
+            </div>
+            <button class="action-mini-btn" onclick="refreshDashboard()">Refresh Log Stream</button>
+          </div>
+
+          <div class="log-stream" id="audit-log-stream">
+            <div class="log-entry">
+              <span class="log-time">[System]</span>
+              <span>Awaiting telemetry stream...</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Toast Shelf -->
+  <div class="toast-shelf" id="toast-shelf"></div>
+
+  <script>
+    // Configuration & State
+    let adminSecret = sessionStorage.getItem("JARVIS_ADMIN_KEY") || "";
+    const defaultServerUrl = `${window.location.protocol}//${window.location.hostname || "localhost"}:8081`;
+    let serverBaseUrl = sessionStorage.getItem("JARVIS_SERVER_URL") || defaultServerUrl;
+    let currentMasterPasscode = "";
+    let isPasscodeMasked = true;
+    let allLicenses = [];
+
+    // Tab Switching Function
+    function switchTab(tabId) {
+      document.querySelectorAll(".admin-tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
+      });
+      document.querySelectorAll(".tab-pane").forEach(pane => {
+        pane.classList.toggle("active", pane.id === tabId);
+      });
+      sessionStorage.setItem("JARVIS_ACTIVE_TAB", tabId);
+    }
+
+    // Toast Notification Utility
+    function showToast(msg, type = "info") {
+      const shelf = document.getElementById("toast-shelf");
+      const toast = document.createElement("div");
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span>${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
+          <span>${msg}</span>
+        </div>
+      `;
+      shelf.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = "toastOut 0.3s forwards ease";
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Initialize On Load
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("admin-server-url").value = serverBaseUrl;
+      
+      const savedTab = sessionStorage.getItem("JARVIS_ACTIVE_TAB") || "tab-generator";
+      switchTab(savedTab);
+
+      if (adminSecret) {
+        document.getElementById("admin-secret-input").value = adminSecret;
+        verifyAndLoadDashboard();
+      }
+    });
+
+    // Handle Admin Login Submission
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const secretInput = document.getElementById("admin-secret-input").value.trim();
+      const serverInput = document.getElementById("admin-server-url").value.trim();
+      const errBox = document.getElementById("auth-error-msg");
+      const submitBtn = document.getElementById("auth-submit-btn");
+
+      if (!secretInput) return;
+
+      adminSecret = secretInput;
+      serverBaseUrl = serverInput.replace(/\/$/, "");
+      sessionStorage.setItem("JARVIS_ADMIN_KEY", adminSecret);
+      sessionStorage.setItem("JARVIS_SERVER_URL", serverBaseUrl);
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Verifying...";
+      errBox.style.display = "none";
+
+      try {
+        await verifyAndLoadDashboard();
+      } catch (err) {
+        errBox.innerText = err.message || "Failed to authenticate. Verify Admin Secret Key.";
+        errBox.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `Authenticate & Unlock`;
+      }
+    }
+
+    // Verify Admin Secret against Backend & Load Dashboard
+    async function verifyAndLoadDashboard() {
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/dashboard`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Admin-Key": adminSecret
+          }
+        });
+
+        if (resp.status === 401 || resp.status === 403) {
+          throw new Error("Invalid Admin Secret Key. Access denied.");
+        }
+
+        if (!resp.ok) {
+          throw new Error(`Server returned HTTP ${resp.status}`);
+        }
+
+        const data = await resp.json();
+        
+        // Hide auth modal & show dashboard
+        document.getElementById("admin-auth-overlay").style.display = "none";
+        document.getElementById("admin-dashboard-view").style.display = "block";
+
+        renderDashboard(data);
+        showToast("Admin session authenticated successfully", "success");
+      } catch (err) {
+        sessionStorage.removeItem("JARVIS_ADMIN_KEY");
+        document.getElementById("admin-auth-overlay").style.display = "flex";
+        document.getElementById("admin-dashboard-view").style.display = "none";
+        throw err;
+      }
+    }
+
+    // Render Dashboard Data
+    function renderDashboard(data) {
+      currentMasterPasscode = data.master_passcode || "Jarvis2026!";
+      updatePasscodeDisplay();
+
+      // Top counters
+      const activeCount = data.active_licenses ?? 0;
+      const totalCount = data.total_licenses ?? 0;
+      document.getElementById("stat-active-licenses").innerText = activeCount;
+      document.getElementById("stat-total-licenses").innerText = totalCount;
+      
+      const tabBadgeLicenses = document.getElementById("tab-badge-licenses");
+      if (tabBadgeLicenses) tabBadgeLicenses.innerText = totalCount;
+
+      // Convert blocked entities
+      const rawIps = data.blocked_ips || {};
+      const ipsArray = Array.isArray(rawIps) ? rawIps : Object.keys(rawIps);
+
+      const rawHwids = data.blocked_hwids || {};
+      const hwidsArray = Array.isArray(rawHwids) ? rawHwids : Object.keys(rawHwids);
+
+      const totalBlocked = ipsArray.length + hwidsArray.length;
+      document.getElementById("stat-blocked-count").innerText = totalBlocked;
+
+      const tabBadgeBlocked = document.getElementById("tab-badge-blocked");
+      if (tabBadgeBlocked) {
+        tabBadgeBlocked.innerText = totalBlocked;
+        if (totalBlocked > 0) {
+          tabBadgeBlocked.classList.add("tab-badge-warn");
+        } else {
+          tabBadgeBlocked.classList.remove("tab-badge-warn");
+        }
+      }
+
+      // Licenses table - normalize dict to array
+      const rawLics = data.licenses || {};
+      if (!Array.isArray(rawLics)) {
+        allLicenses = Object.keys(rawLics).map(k => ({
+          key: k,
+          ...rawLics[k]
+        }));
+      } else {
+        allLicenses = rawLics;
+      }
+      renderLicensesTable(allLicenses);
+
+      // Blocked lists
+      renderBlockedEntities(ipsArray, hwidsArray);
+
+      // Audit logs
+      renderAuditLogs(data.recent_logs || []);
+    }
+
+    // Refresh Dashboard Data
+    async function refreshDashboard() {
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/dashboard`, {
+          headers: { "X-Admin-Key": adminSecret }
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          renderDashboard(data);
+          showToast("Data refreshed from license server", "info");
+        }
+      } catch (e) {
+        showToast("Failed to refresh: " + e.message, "error");
+      }
+    }
+
+    // Lock & Log Out
+    function lockAdmin() {
+      sessionStorage.removeItem("JARVIS_ADMIN_KEY");
+      adminSecret = "";
+      document.getElementById("admin-auth-overlay").style.display = "flex";
+      document.getElementById("admin-dashboard-view").style.display = "none";
+      document.getElementById("admin-secret-input").value = "";
+      showToast("Admin session locked", "info");
+    }
+
+    // Toggle Passcode Masking
+    function togglePasscodeVisibility() {
+      isPasscodeMasked = !isPasscodeMasked;
+      updatePasscodeDisplay();
+    }
+
+    function updatePasscodeDisplay() {
+      const displayElem = document.getElementById("current-passcode-display");
+      const statElem = document.getElementById("stat-passcode");
+      const btn = document.getElementById("btn-toggle-passcode");
+
+      if (isPasscodeMasked) {
+        displayElem.value = "••••••••";
+        statElem.innerText = "••••••••";
+        btn.innerText = "👁️ View";
+      } else {
+        displayElem.value = currentMasterPasscode;
+        statElem.innerText = currentMasterPasscode;
+        btn.innerText = "🔒 Hide";
+      }
+    }
+
+    // Update Master Passcode
+    async function handleUpdatePasscode(e) {
+      e.preventDefault();
+      const newPasscode = document.getElementById("new-passcode-input").value.trim();
+      const btn = document.getElementById("btn-update-passcode");
+
+      if (!newPasscode) return;
+
+      btn.disabled = true;
+      btn.innerText = "Saving New Passcode...";
+
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/update-passcode`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Admin-Key": adminSecret
+          },
+          body: JSON.stringify({ new_passcode: newPasscode })
+        });
+
+        const result = await resp.json();
+        if (resp.ok && (result.success || result.status === "success")) {
+          currentMasterPasscode = newPasscode;
+          isPasscodeMasked = false;
+          updatePasscodeDisplay();
+          document.getElementById("new-passcode-input").value = "";
+          showToast("Master Passcode successfully updated!", "success");
+          refreshDashboard();
+        } else {
+          showToast(result.error || "Failed to update passcode", "error");
+        }
+      } catch (err) {
+        showToast("Error updating passcode: " + err.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Save & Update Master Passcode`;
+      }
+    }
+
+    // Preset Selection Logic
+    function selectPreset(preset) {
+      document.getElementById("selected-duration-preset").value = preset;
+      document.querySelectorAll("#preset-selector-group .preset-btn").forEach(btn => {
+        if (btn.getAttribute("data-preset") === preset) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+
+    // Generate License Key
+    let lastGeneratedKeyData = null;
+    async function handleGenerateKey(e) {
+      e.preventDefault();
+      const preset = document.getElementById("selected-duration-preset").value;
+      const tier = document.getElementById("license-tier").value;
+      const deviceLimit = parseInt(document.getElementById("device-limit").value, 10);
+      const clientNote = document.getElementById("client-note-input").value.trim();
+      const btn = document.getElementById("btn-generate-key");
+
+      btn.disabled = true;
+      btn.innerText = "Cryptographically Generating Key...";
+
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/generate-key`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Admin-Key": adminSecret
+          },
+          body: JSON.stringify({
+            preset: preset,
+            tier: tier,
+            device_limit: deviceLimit,
+            client_name: clientNote
+          })
+        });
+
+        const res = await resp.json();
+        if (resp.ok && res.license_key) {
+          lastGeneratedKeyData = res;
+          
+          // Display the newly generated key
+          const box = document.getElementById("new-key-display-box");
+          document.getElementById("gen-key-text").innerText = res.license_key;
+          
+          let expiryText = res.expires_at ? new Date(res.expires_at).toLocaleDateString() : "Lifetime (Never Expires)";
+          document.getElementById("gen-key-meta").innerText = `${tier} • ${res.duration_display} • Limit: ${deviceLimit} device(s) • Expires: ${expiryText}`;
+          box.style.display = "block";
+
+          showToast("New " + res.duration_display + " license key created!", "success");
+          refreshDashboard();
+        } else {
+          showToast(res.error || "Failed to generate key", "error");
+        }
+      } catch (err) {
+        showToast("Error generating key: " + err.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Generate New License Key`;
+      }
+    }
+
+    // Copy Generated Key
+    function copyGenKey() {
+      if (!lastGeneratedKeyData) return;
+      navigator.clipboard.writeText(lastGeneratedKeyData.license_key).then(() => {
+        showToast("License key copied to clipboard!", "success");
+      });
+    }
+
+    // Copy Complete Handover Message
+    function copyClientHandoverMessage() {
+      if (!lastGeneratedKeyData) return;
+      const k = lastGeneratedKeyData;
+      const expiryFormatted = k.expires_at ? new Date(k.expires_at).toLocaleDateString() : "Permanent / Lifetime (Never Expires)";
+      const clientNote = document.getElementById("client-note-input").value.trim();
+
+      const message = `🎉 Thank you for purchasing Jarvis Maps AI!
+
+Here are your official license credentials:
+--------------------------------------------------
+Product: Jarvis Maps AI (${k.tier || 'Pro'} Edition)
+Duration: ${k.duration_display}
+License Key: ${k.license_key}
+Device Limit: ${k.device_limit || 1} Device(s)
+Validity / Expiration: ${expiryFormatted}
+${clientNote ? 'Client / Order Ref: ' + clientNote : ''}
+--------------------------------------------------
+
+How to Activate:
+1. Download Jarvis Maps AI from our website: http://localhost:8080/#download
+2. Launch the application on your Windows 10/11 computer.
+3. When prompted, enter your License Key (${k.license_key}).
+4. Enjoy high-performance spatial intelligence!
+
+Need support? Reach out directly via our official portal.`;
+
+      navigator.clipboard.writeText(message).then(() => {
+        showToast("Complete customer message copied!", "success");
+      });
+    }
+
+    // Render Licenses Table
+    function renderLicensesTable(licenses) {
+      const tbody = document.getElementById("licenses-table-body");
+      
+      let list = [];
+      if (Array.isArray(licenses)) {
+        list = licenses;
+      } else if (licenses && typeof licenses === 'object') {
+        list = Object.keys(licenses).map(k => ({
+          key: k,
+          ...(licenses[k] || {})
+        }));
+      }
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">No licenses issued yet. Use the generator tab above.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(l => {
+        const isRevoked = String(l.status).toUpperCase() === "REVOKED";
+        const isExpired = l.expires_at && new Date(l.expires_at) < new Date();
+        const isActive = String(l.status).toUpperCase() === "ACTIVE" && !isExpired;
+
+        const statusBadge = isRevoked
+          ? `<span class="badge-status badge-revoked">Revoked</span>`
+          : isExpired
+          ? `<span class="badge-status badge-expired">Expired</span>`
+          : `<span class="badge-status badge-active">Active</span>`;
+
+        const expiryDisplay = l.expires_at ? new Date(l.expires_at).toLocaleDateString() : `<span style="color:#34d399; font-weight:600;">★ Lifetime</span>`;
+        const boundCount = (l.bound_hwids || []).length;
+        const deviceLimit = l.max_devices || l.device_limit || 1;
+        const durationDisplay = l.duration_display || l.preset || "Custom";
+        const clientDisplay = l.notes || l.client_name || "—";
+
+        return `
+          <tr>
+            <td>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <code style="font-family:var(--font-mono); font-weight:600; color:var(--cyan-light);">${l.key}</code>
+                <button class="action-mini-btn" style="padding: 2px 6px; font-size: 0.7rem;" onclick="copyText('${l.key}')" title="Copy Key">📋</button>
+              </div>
+            </td>
+            <td>
+              <strong>${l.tier || 'Pro'}</strong>
+              <div style="font-size:0.75rem; color:var(--text-subtle);">${durationDisplay}</div>
+            </td>
+            <td>
+              <span style="color: ${clientDisplay !== '—' ? '#fff' : 'var(--text-subtle)'};">${clientDisplay}</span>
+            </td>
+            <td>${expiryDisplay}</td>
+            <td>
+              <span style="font-family:var(--font-mono); font-size:0.8rem;">${boundCount} / ${deviceLimit >= 100 ? '∞' : deviceLimit}</span>
+            </td>
+            <td>${statusBadge}</td>
+            <td style="text-align: right;">
+              <div class="action-btn-group" style="justify-content: flex-end;">
+                ${isActive ? `
+                  <button class="action-mini-btn btn-warn" onclick="revokeKey('${l.key}')" title="Revoke access">Revoke</button>
+                ` : `
+                  <button class="action-mini-btn" style="color:#34d399;" onclick="reactivateKey('${l.key}')" title="Reactivate key">Reactivate</button>
+                `}
+                <button class="action-mini-btn" onclick="resetHwid('${l.key}')" title="Unbind all machines">Reset HWID</button>
+                <button class="action-mini-btn btn-danger" onclick="deleteKey('${l.key}')" title="Permanently delete">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // Filter licenses table
+    function filterLicensesTable() {
+      const q = document.getElementById("license-search-input").value.toLowerCase();
+      const statusFilter = document.getElementById("filter-status-select").value;
+
+      const filtered = allLicenses.filter(l => {
+        const matchesQuery = (l.key && l.key.toLowerCase().includes(q)) ||
+                             (l.client_name && l.client_name.toLowerCase().includes(q)) ||
+                             (l.notes && l.notes.toLowerCase().includes(q)) ||
+                             (l.tier && l.tier.toLowerCase().includes(q));
+
+        let matchesStatus = true;
+        const isExpired = l.expires_at && new Date(l.expires_at) < new Date();
+        if (statusFilter === "active") {
+          matchesStatus = String(l.status).toUpperCase() === "ACTIVE" && !isExpired;
+        } else if (statusFilter === "revoked") {
+          matchesStatus = String(l.status).toUpperCase() === "REVOKED";
+        } else if (statusFilter === "expired") {
+          matchesStatus = isExpired;
+        }
+
+        return matchesQuery && matchesStatus;
+      });
+
+      renderLicensesTable(filtered);
+    }
+
+    // Key Action Handlers
+    async function revokeKey(key) {
+      if (!confirm(`Revoke license key ${key}? This will immediately block application access.`)) return;
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/revoke-key`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-Admin-Key": adminSecret },
+          body: JSON.stringify({ license_key: key })
+        });
+        const res = await resp.json();
+        if (resp.ok && (res.status === 'revoked' || res.success)) {
+          showToast(`License ${key} revoked`, "warn");
+          refreshDashboard();
+        } else {
+          showToast(res.error || "Failed to revoke", "error");
+        }
+      } catch (e) {
+        showToast(e.message, "error");
+      }
+    }
+
+    async function reactivateKey(key) {
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/reactivate-key`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-Admin-Key": adminSecret },
+          body: JSON.stringify({ license_key: key })
+        });
+        const res = await resp.json();
+        if (resp.ok && (res.status === 'active' || res.success)) {
+          showToast(`License ${key} reactivated`, "success");
+          refreshDashboard();
+        } else {
+          showToast(res.error || "Failed to reactivate", "error");
+        }
+      } catch (e) {
+        showToast(e.message, "error");
+      }
+    }
+
+    async function resetHwid(key) {
+      if (!confirm(`Reset all bound devices for ${key}? The user can re-bind on a new PC.`)) return;
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/reset-hwid`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-Admin-Key": adminSecret },
+          body: JSON.stringify({ license_key: key })
+        });
+        const res = await resp.json();
+        if (resp.ok && (res.status === 'reset' || res.success)) {
+          showToast(`Hardware devices unbound for ${key}`, "success");
+          refreshDashboard();
+        } else {
+          showToast(res.error || "Failed to reset HWID", "error");
+        }
+      } catch (e) {
+        showToast(e.message, "error");
+      }
+    }
+
+    async function deleteKey(key) {
+      if (!confirm(`Permanently delete license ${key} from database? This cannot be undone.`)) return;
+      try {
+        const resp = await fetch(`${serverBaseUrl}/api/admin/delete-key`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-Admin-Key": adminSecret },
+          body: JSON.stringify({ license_key: key })
+        });
+        const res = await resp.json();
+        if (resp.ok && (res.status === 'deleted' || res.success)) {
+          showToast(`License ${key} permanently deleted`, "info");
+          refreshDashboard();
+        } else {
+          showToast(res.error || "Failed to delete", "error");
+        }
+      } catch (e) {
+        showToast(e.message, "error");
+      }
+    }
+
+    // Render Blocked Entities
+    function renderBlockedEntities(ips, hwids) {
+      const ipContainer = document.getElementById("blocked-ips-list");
+      const hwidContainer = document.getElementById("blocked-hwids-list");
+
+      const ipsList = Array.isArray(ips) ? ips : Object.keys(ips || {});
+      const hwidsList = Array.isArray(hwids) ? hwids : Object.keys(hwids || {});
+
+      if (ipsList.length === 0) {
+        ipContainer.innerHTML = `<span style="color:var(--text-muted); font-size:0.8rem;">No IPs currently blacklisted.</span>`;
+      } else {
+        ipContainer.innerHTML = ipsList.map(ip => `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:8px 12px; border-radius:6px; margin-bottom:6px;">
+            <code style="color:#fb7185; font-size:0.84rem;">${ip}</code>
+            <button class="action-mini-btn" onclick="unblockEntity('ip', '${ip}')" style="padding:3px 10px; font-size:0.72rem;">Unblock</button>
+          </div>
+        `).join("");
+      }
+
+      if (hwidsList.length === 0) {
+        hwidContainer.innerHTML = `<span style="color:var(--text-muted); font-size:0.8rem;">No Hardware IDs currently blacklisted.</span>`;
+      } else {
+        hwidContainer.innerHTML = hwidsList.map(hwid => `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); padding:8px 12px; border-radius:6px; margin-bottom:6px;">
+            <code style="color:#fb7185; font-size:0.84rem;">${hwid.substring(0, 20)}...</code>
+            <button class="action-mini-btn" onclick="unblockEntity('hwid', '${hwid}')" style="padding:3px 10px; font-size:0.72rem;">Unblock</button>
+          </div>
+        `).join("");
+      }
+    }
+
+    async function unblockEntity(type, entity) {
+      try {
+        const endpoint = type === 'ip' ? `${serverBaseUrl}/api/admin/unblock-ip` : `${serverBaseUrl}/api/admin/unblock-hwid`;
+        const payload = type === 'ip' ? { ip: entity } : { hwid: entity };
+        const resp = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-Admin-Key": adminSecret },
+          body: JSON.stringify(payload)
+        });
+        const res = await resp.json();
+        if (resp.ok && (res.status === 'unblocked' || res.success)) {
+          showToast(`Unblocked ${entity}`, "success");
+          refreshDashboard();
+        } else {
+          showToast(res.error || "Failed to unblock entity", "error");
+        }
+      } catch (e) {
+        showToast(e.message, "error");
+      }
+    }
+
+    // Render Audit Logs
+    function renderAuditLogs(logs) {
+      const container = document.getElementById("audit-log-stream");
+      const list = Array.isArray(logs) ? logs : [];
+      if (list.length === 0) {
+        container.innerHTML = `<div class="log-entry"><span class="log-time">[Audit]</span><span>No recent security events recorded.</span></div>`;
+        return;
+      }
+
+      container.innerHTML = list.slice().reverse().map(l => {
+        const timeStr = l.timestamp ? new Date(l.timestamp).toLocaleTimeString() : "[now]";
+        return `
+          <div class="log-entry">
+            <span class="log-time">${timeStr}</span>
+            <span><strong style="color:#38bdf8;">[${l.event || 'INFO'}]</strong> ${l.details || ''}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function copyText(str) {
+      navigator.clipboard.writeText(str).then(() => {
+        showToast("Copied: " + str, "info");
+      });
+    }
+  </script>
+</body>
+</html>

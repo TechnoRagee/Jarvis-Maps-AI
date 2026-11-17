@@ -1,0 +1,476 @@
+{
+  "licenses": {
+    "JM-E74B-39D9-677A-BC2A": {
+      "tier": "Pro 1-Month",
+      "status": "ACTIVE",
+      "max_devices": 1,
+      "bound_hwids": [],
+      "created_at": "2026-10-09T11:52:43.199298",
+      "expires_at": "2026-11-08T11:52:43.199298",
+      "notes": "Test Laptop",
+      "client_name": "Test Laptop",
+      "preset": "1_month",
+      "duration_display": "1 Month"
+    }
+  },
+  "blocked_ips": {},
+  "blocked_hwids": {
+    "JM-HWID-ATTACKER-TEST": {
+      "blocked_at": "2026-10-07T07:03:34.856885",
+      "reason": "Exceeded 3 invalid access attempts",
+      "last_ip": "198.51.100.42"
+    }
+  },
+  "failed_attempts": {},
+  "audit_logs": [
+    {
+      "timestamp": "2026-10-07T06:55:23.012622",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T06:58:35.884503",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T06:58:39.790541",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T06:58:41.809361",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-1AF8-28BC-FCF4-A90E (Pro GIS Workstation)"
+    },
+    {
+      "timestamp": "2026-10-07T06:58:45.736550",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T06:58:47.781815",
+      "event": "AUTH_FAILED",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-9999-8888-7777-6666",
+      "details": "Failed attempt #1"
+    },
+    {
+      "timestamp": "2026-10-07T07:00:08.604322",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T07:00:10.636054",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T07:00:12.666686",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-9B79-EB68-DF12-FE79 (Pro GIS Workstation)"
+    },
+    {
+      "timestamp": "2026-10-07T07:00:14.710499",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T07:00:16.755518",
+      "event": "AUTH_FAILED",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-9999-8888-7777-6666",
+      "details": "Failed attempt #1"
+    },
+    {
+      "timestamp": "2026-10-07T07:02:39.241450",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T07:02:41.282365",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T07:02:43.341924",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-61C5-DD6F-32BC-ABF0 (Pro GIS Workstation)"
+    },
+    {
+      "timestamp": "2026-10-07T07:02:45.394077",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T07:02:47.443186",
+      "event": "AUTH_FAILED",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-9999-8888-7777-6666",
+      "details": "Failed attempt #1"
+    },
+    {
+      "timestamp": "2026-10-07T07:03:30.766887",
+      "event": "AUTH_FAILED",
+      "ip": "198.51.100.42",
+      "hwid": "JM-HWID-ATTACKER-TEST",
+      "details": "Failed attempt #1"
+    },
+    {
+      "timestamp": "2026-10-07T07:03:32.818443",
+      "event": "AUTH_FAILED",
+      "ip": "198.51.100.42",
+      "hwid": "JM-HWID-ATTACKER-TEST",
+      "details": "Failed attempt #2"
+    },
+    {
+      "timestamp": "2026-10-07T07:03:34.856885",
+      "event": "AUTH_FAILED",
+      "ip": "198.51.100.42",
+      "hwid": "JM-HWID-ATTACKER-TEST",
+      "details": "Failed attempt #3"
+    },
+    {
+      "timestamp": "2026-10-07T07:03:34.856885",
+      "event": "IP_AND_HWID_BANNED",
+      "ip": "198.51.100.42",
+      "hwid": "JM-HWID-ATTACKER-TEST",
+      "details": "Permanently blacklisted"
+    },
+    {
+      "timestamp": "2026-10-07T07:03:36.915246",
+      "event": "BLOCKED_IP_REJECTED",
+      "ip": "198.51.100.42",
+      "hwid": "JM-HWID-ATTACKER-TEST",
+      "details": "Rejected: IP on blacklist"
+    },
+    {
+      "timestamp": "2026-10-07T07:03:38.968244",
+      "event": "IP_UNBLOCKED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Admin unblocked IP 198.51.100.42"
+    },
+    {
+      "timestamp": "2026-10-07T07:04:16.959557",
+      "event": "BLOCKED_HWID_REJECTED",
+      "ip": "198.51.100.42",
+      "hwid": "JM-HWID-ATTACKER-TEST",
+      "details": "Rejected: Device HWID on blacklist"
+    },
+    {
+      "timestamp": "2026-10-07T07:05:05.915184",
+      "event": "AUTH_FAILED",
+      "ip": "198.51.100.113",
+      "hwid": "JM-HWID-ATTACKER-1791356703",
+      "details": "Failed attempt #1"
+    },
+    {
+      "timestamp": "2026-10-07T07:05:07.956561",
+      "event": "AUTH_FAILED",
+      "ip": "198.51.100.113",
+      "hwid": "JM-HWID-ATTACKER-1791356703",
+      "details": "Failed attempt #2"
+    },
+    {
+      "timestamp": "2026-10-07T07:05:10.010343",
+      "event": "AUTH_FAILED",
+      "ip": "198.51.100.113",
+      "hwid": "JM-HWID-ATTACKER-1791356703",
+      "details": "Failed attempt #3"
+    },
+    {
+      "timestamp": "2026-10-07T07:05:10.010343",
+      "event": "IP_AND_HWID_BANNED",
+      "ip": "198.51.100.113",
+      "hwid": "JM-HWID-ATTACKER-1791356703",
+      "details": "Permanently blacklisted"
+    },
+    {
+      "timestamp": "2026-10-07T07:05:12.064038",
+      "event": "BLOCKED_IP_REJECTED",
+      "ip": "198.51.100.113",
+      "hwid": "JM-HWID-ATTACKER-1791356703",
+      "details": "Rejected: IP on blacklist"
+    },
+    {
+      "timestamp": "2026-10-07T07:05:14.115794",
+      "event": "IP_UNBLOCKED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Admin unblocked IP 198.51.100.113"
+    },
+    {
+      "timestamp": "2026-10-07T07:05:16.163098",
+      "event": "HWID_UNBLOCKED",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-ATTACKER-1791356703",
+      "details": "Admin unblocked HWID JM-HWID-ATTACKER-1791356703"
+    },
+    {
+      "timestamp": "2026-10-07T09:06:20.915736",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T10:13:41.577892",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-5C36-74EA-1BA4-EDF6",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T11:18:42.931208",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T11:23:27.778002",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-07T11:45:05.983898",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-08T04:35:58.876541",
+      "event": "AUTH_SUCCESS",
+      "ip": "127.0.0.1",
+      "hwid": "JM-HWID-89E8-7A67-E601-898B",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-08T04:56:34.175620",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-3219-9BF4-1A9A-E5EA (Pro 1-Month)"
+    },
+    {
+      "timestamp": "2026-10-08T04:56:36.222664",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-0C50-5DE2-095A-350D (Pro 3-Month)"
+    },
+    {
+      "timestamp": "2026-10-08T04:56:38.255112",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-8D77-A376-D489-9665 (Pro 6-Month)"
+    },
+    {
+      "timestamp": "2026-10-08T04:56:40.311403",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-307C-1B2F-28F4-3C8C (Enterprise 12-Month)"
+    },
+    {
+      "timestamp": "2026-10-08T04:56:42.370815",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-1984-126B-C78A-F44D (Enterprise Lifetime)"
+    },
+    {
+      "timestamp": "2026-10-08T05:10:19.199938",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-7E70-DE68-A5B0-DA3E (Pro)"
+    },
+    {
+      "timestamp": "2026-10-08T05:10:21.959822",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-9845-55C4-241C-8BD4 (Pro)"
+    },
+    {
+      "timestamp": "2026-10-08T05:13:10.814103",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-76F9-67AB-B723-4E21 (Pro)"
+    },
+    {
+      "timestamp": "2026-10-08T05:13:14.005631",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-C1BD-CEE2-58AF-7A8B (Pro)"
+    },
+    {
+      "timestamp": "2026-10-08T05:14:30.393242",
+      "event": "PASSCODE_CHANGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Master passcode updated to: JarvisOwner2026Secure!"
+    },
+    {
+      "timestamp": "2026-10-08T05:15:21.186704",
+      "event": "PASSCODE_CHANGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Master passcode updated to: JarvisOwner2026Secure!"
+    },
+    {
+      "timestamp": "2026-10-08T05:15:23.443893",
+      "event": "PASSCODE_CHANGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Master passcode updated to: Jarvis2026!"
+    },
+    {
+      "timestamp": "2026-10-08T05:20:25.663526",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-CB90-5745-801E-37D1 (Pro)"
+    },
+    {
+      "timestamp": "2026-10-08T05:20:28.437095",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-B124-0E7B-3009-7372 (Pro)"
+    },
+    {
+      "timestamp": "2026-10-08T05:23:23.914675",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-C1B3-669B-1FC8-67A3 (Pro)"
+    },
+    {
+      "timestamp": "2026-10-09T06:37:36.648722",
+      "event": "KEYS_PURGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "All license keys purged for clean production start"
+    },
+    {
+      "timestamp": "2026-10-09T06:39:46.701528",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-C1F4-2875-42BF-86E4 (Pro)"
+    },
+    {
+      "timestamp": "2026-10-09T06:40:14.500243",
+      "event": "KEY_DELETED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Admin deleted key JM-C1F4-2875-42BF-86E4"
+    },
+    {
+      "timestamp": "2026-10-09T10:37:37.090720",
+      "event": "PASSCODE_CHANGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Master passcode updated to: Vareen2004"
+    },
+    {
+      "timestamp": "2026-10-09T10:37:49.165420",
+      "event": "PASSCODE_CHANGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Master passcode updated to: Vareen2004"
+    },
+    {
+      "timestamp": "2026-10-09T10:41:25.706251",
+      "event": "PASSCODE_CHANGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Master passcode updated to: Vareen2004"
+    },
+    {
+      "timestamp": "2026-10-09T10:42:31.722293",
+      "event": "PASSCODE_CHANGED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Master passcode updated to: Vareen2608"
+    },
+    {
+      "timestamp": "2026-10-09T11:26:55.982147",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-7A87-DD04-7339-3C7D (Pro)"
+    },
+    {
+      "timestamp": "2026-10-09T11:30:27.476250",
+      "event": "KEY_DELETED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Admin deleted key JM-7A87-DD04-7339-3C7D"
+    },
+    {
+      "timestamp": "2026-10-09T11:52:43.199298",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-E74B-39D9-677A-BC2A (Pro 1-Month)"
+    },
+    {
+      "timestamp": "2026-10-09T11:53:51.436543",
+      "event": "KEY_GENERATED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Created key JM-4566-EFAB-C871-341B (Pro 1-Month)"
+    },
+    {
+      "timestamp": "2026-10-09T11:54:36.460467",
+      "event": "AUTH_SUCCESS",
+      "ip": "192.168.1.244",
+      "hwid": "JM-HWID-TEST-OTHER-LAPTOP",
+      "details": "Valid authorization for key/passcode"
+    },
+    {
+      "timestamp": "2026-10-09T11:55:26.438359",
+      "event": "KEY_DELETED",
+      "ip": "127.0.0.1",
+      "hwid": "",
+      "details": "Admin deleted key JM-4566-EFAB-C871-341B"
+    }
+  ],
+  "master_passcode": "Vareen2608"
+}

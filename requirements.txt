@@ -1,0 +1,17 @@
+playwright>=1.40.0
+selenium==4.18.1
+webdriver-manager==4.0.1
+pandas==2.2.1
+openpyxl==3.1.2
+Shapely
+fastkml
+opencv-python
+numpy
+requests
+pyproj
+sounddevice
+SpeechRecognition
+scipy
+xlrd
+Pillow>=10.0.0
+certifi>=2024.2.2

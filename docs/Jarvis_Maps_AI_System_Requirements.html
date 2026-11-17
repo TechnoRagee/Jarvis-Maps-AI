@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jarvis Maps AI — System Requirements Specification</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 16mm 16mm 16mm 16mm;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #080a12;
+      color: #e2e8f0;
+      line-height: 1.55;
+      font-size: 9.5pt;
+    }
+    
+    .cover-card {
+      background: linear-gradient(135deg, rgba(26, 32, 50, 0.95) 0%, rgba(12, 15, 25, 0.98) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .badge {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 8pt;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    h1 {
+      font-size: 20pt;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    
+    .subtitle {
+      font-size: 10.5pt;
+      color: #94a3b8;
+      margin-bottom: 14px;
+    }
+    
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 12px;
+    }
+    
+    .meta-item .label {
+      font-size: 7.5pt;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .meta-item .val {
+      font-size: 9pt;
+      color: #f8fafc;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    
+    .section {
+      background: rgba(18, 22, 34, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+    
+    h2 {
+      font-size: 12.5pt;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 6px;
+    }
+    
+    h3 {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #818cf8;
+      margin: 10px 0 6px 0;
+    }
+    
+    p {
+      color: #cbd5e1;
+      margin-bottom: 8px;
+      font-size: 9pt;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 8.5pt;
+    }
+    
+    th, td {
+      padding: 7px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    
+    th {
+      background: rgba(255, 255, 255, 0.04);
+      color: #a5b4fc;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 7.5pt;
+      letter-spacing: 0.04em;
+    }
+    
+    td {
+      color: #cbd5e1;
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    
+    .card-box {
+      background: rgba(25, 30, 48, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    
+    .card-box h4 {
+      font-size: 9.5pt;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .card-box p {
+      font-size: 8.5pt;
+      color: #94a3b8;
+      margin: 0;
+    }
+    
+    .pill {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 600;
+    }
+    .pill-green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .pill-blue { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    .pill-indigo { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+    
+    .callout {
+      background: rgba(99, 102, 241, 0.08);
+      border-left: 3px solid #6366f1;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 8.8pt;
+      color: #e0e7ff;
+    }
+    
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover Header -->
+  <div class="cover-card">
+    <div class="badge">OFFICIAL COMPATIBILITY SPECIFICATION</div>
+    <h1>Jarvis Maps AI — System Requirements Guide</h1>
+    <div class="subtitle">Hardware, Operating System, Browser Engine & Network Prerequisites for Production Deployment</div>
+    
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="label">Software Edition</div>
+        <div class="val">Jarvis Maps AI v1.0 Production</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Target OS</div>
+        <div class="val">Windows 10 / 11 (64-bit)</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Runtime Architecture</div>
+        <div class="val">Standalone Frozen EXE</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Python Requirement</div>
+        <div class="val" style="color: #34d399;">None (Zero-Install)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1: Overview -->
+  <div class="section">
+    <h2><span>1.</span> Overview & Deployment Philosophy</h2>
+    <p>
+      <strong>Jarvis Maps AI Studio</strong> is an enterprise geospatial automation platform engineered as a self-contained, frozen 64-bit Windows application. 
+    </p>
+    <p>
+      The software has been packaged so that <strong>end users do not need to install Python, pip packages, virtual environments, or manual browser drivers</strong>. All GIS libraries (Shapely, PyProj, Fiona, OpenCV, Pandas) and Playwright automation hooks are embedded directly into the binary package.
+    </p>
+    <div class="callout">
+      <strong>Zero Development Prerequisites:</strong> End users only need a standard Windows 10/11 computer with an internet connection. The application boots right out of the extracted folder.
+    </div>
+  </div>
+
+  <!-- Section 2: Hardware Specifications -->
+  <div class="section">
+    <h2><span>2.</span> Hardware Requirements</h2>
+    <p>Compare the minimum requirements for basic coordinate extraction against recommended specs for heavy multi-worker bulk harvesting:</p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Minimum Requirements</th>
+          <th>Recommended Requirements (High-Volume)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Processor (CPU)</strong></td>
+          <td>Dual-Core 2.0 GHz (Intel Core i3 / AMD Ryzen 3)</td>
+          <td>Quad-Core 2.8+ GHz (Intel Core i5/i7 or AMD Ryzen 5/7)</td>
+        </tr>
+        <tr>
+          <td><strong>Memory (RAM)</strong></td>
+          <td><strong>4 GB RAM</strong></td>
+          <td><strong>8 GB – 16 GB RAM</strong> (Optimal for 5+ concurrent browser workers)</td>
+        </tr>
+        <tr>
+          <td><strong>Storage (Disk)</strong></td>
+          <td>2 GB free disk space (HDD/SSD)</td>
+          <td>5 GB free space on <strong>SSD</strong> (Fast SQLite WAL & GeoTIFF raster I/O)</td>
+        </tr>
+        <tr>
+          <td><strong>Display Resolution</strong></td>
+          <td>1280 × 720 (720p HD)</td>
+          <td><strong>1920 × 1080 (1080p FHD)</strong> or higher (Scaled for 1240×820 Studio UI)</td>
+        </tr>
+        <tr>
+          <td><strong>Input Devices</strong></td>
+          <td>Standard Keyboard and Mouse</td>
+          <td>Microphone (Required only if using wake-word voice commands)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 3: Operating System & Software Prerequisites -->
+  <div class="section">
+    <h2><span>3.</span> Operating System & Software Prerequisites</h2>
+    
+    <div class="grid-2">
+      <div class="card-box">
+        <h4><span class="pill pill-green">Supported</span> Operating Systems</h4>
+        <p style="margin-top: 4px;">• <strong>Windows 11</strong> (All 64-bit editions: Home, Pro, Enterprise)<br>
+        • <strong>Windows 10</strong> (64-bit, Version 1809 or later)<br>
+        • Windows Server 2019 / 2022 (with Desktop Experience)</p>
+      </div>
+      <div class="card-box">
+        <h4><span class="pill pill-blue">Engine</span> Browser Architecture</h4>
+        <p style="margin-top: 4px;">• <strong>Microsoft Edge</strong> (Pre-installed by default on Windows 10/11)<br>
+        • <em>Fallback:</em> Google Chrome (Version 110+)<br>
+        • Headless & visual automation supported out-of-the-box</p>
+      </div>
+    </div>
+
+    <div class="card-box" style="margin-top: 8px;">
+      <h4><span>⚙️</span> System Runtimes & Dependencies</h4>
+      <p>
+        • <strong>Visual C++ Redistributable 2015–2022 (x64)</strong>: Standard on modern Windows installations. Required for C-accelerated spatial routines (GEOS, Proj).<br>
+        • <strong>Python Environment</strong>: <span style="color: #34d399; font-weight: 600;">NOT REQUIRED</span>. Complete Python 3.11 runtime is embedded inside the package.<br>
+        • <strong>Microsoft Office / Excel</strong>: <span style="color: #34d399; font-weight: 600;">NOT REQUIRED</span>. Data is exported directly using native OpenPyXL and CSV formatters.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- Section 4: Network & Firewall Requirements -->
+  <div class="section">
+    <h2><span>4.</span> Network & Firewall Connectivity</h2>
+    <p>Jarvis Maps AI interfaces with external geospatial endpoints for real-time map scraping, polygon synchronization, and geocoding:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Endpoint / Domain</th>
+          <th>Protocol & Port</th>
+          <th>Purpose in Application</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>maps.google.com</code></td>
+          <td>HTTPS (Port 443)</td>
+          <td>Interactive map loading, coordinate harvesting, place search</td>
+        </tr>
+        <tr>
+          <td><code>overpass-api.de</code></td>
+          <td>HTTPS (Port 443)</td>
+          <td>OpenStreetMap boundary polygons and administrative relations</td>
+        </tr>
+        <tr>
+          <td><code>nominatim.openstreetmap.org</code></td>
+          <td>HTTPS (Port 443)</td>
+          <td>Hierarchical geocoding (Localities, Suburbs, Sectors)</td>
+        </tr>
+        <tr>
+          <td><code>kml.google.com</code></td>
+          <td>HTTPS (Port 443)</td>
+          <td>KML/KMZ spatial schema validation</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Corporate Proxy & Firewall Note:</strong> If operating behind an enterprise proxy, ensure outbound traffic on port <strong>443 (HTTPS)</strong> is allowed to the domains above. No inbound ports or listener services are required.
+    </div>
+  </div>
+
+  <!-- Section 5: Permissions & Storage -->
+  <div class="section">
+    <h2><span>5.</span> Security, Permissions & Data Storage</h2>
+    
+    <div class="grid-2">
+      <div class="card-box">
+        <h4><span>🔒</span> User Privileges</h4>
+        <p>
+          • <strong>Standard User Rights</strong>: Administrator privileges are <strong>NOT</strong> required to run <code>JarvisMapsAI.exe</code>.<br>
+          • The app can be extracted to <code>C:\Users\&lt;User&gt;\Downloads</code>, <code>Desktop</code>, or <code>AppData</code> without UAC elevation.
+        </p>
+      </div>
+      <div class="card-box">
+        <h4><span>📁</span> Write Permissions</h4>
+        <p>
+          • The application directory requires local read/write permissions to store SQLite database records (<code>jarvis_maps.db</code>), Excel spreadsheets, and GeoTIFF files.
+        </p>
+      </div>
+    </div>
+
+    <h3>First-Time Windows SmartScreen Notice</h3>
+    <p>
+      Because this distribution is direct-downloaded without an enterprise EV signing certificate ($400/yr), Windows SmartScreen will display an informational banner:
+    </p>
+    <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 10px 14px; margin-top: 6px;">
+      <span style="font-weight: 700; color: #34d399;">Resolution:</span> Click <strong>"More info"</strong> and select <strong>"Run anyway"</strong> on first launch. Subsequent launches will start instantly without prompts.
+    </div>
+  </div>
+
+  <!-- Section 6: Summary Checklist -->
+  <div class="section">
+    <h2><span>6.</span> Quick Pre-Launch Checklist for Clients</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Requirement Check</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>64-bit Windows 10 or 11</td>
+          <td><span class="pill pill-green">Mandatory</span></td>
+          <td>32-bit Windows is not supported</td>
+        </tr>
+        <tr>
+          <td>Microsoft Edge Installed</td>
+          <td><span class="pill pill-green">Mandatory</span></td>
+          <td>Pre-installed on all Windows 10/11 systems</td>
+        </tr>
+        <tr>
+          <td>At least 4 GB RAM (8 GB Recommended)</td>
+          <td><span class="pill pill-blue">Recommended</span></td>
+          <td>Prevents memory pressure during multi-tab tasks</td>
+        </tr>
+        <tr>
+          <td>Active Internet Connection</td>
+          <td><span class="pill pill-green">Mandatory</span></td>
+          <td>Required for live spatial data scraping</td>
+        </tr>
+        <tr>
+          <td>Master Access Passcode</td>
+          <td><span class="pill pill-indigo">Security</span></td>
+          <td>Enter <strong><code>Jarvis2026!</code></strong> upon first launch</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align: center; padding: 8px 0; color: #64748b; font-size: 8pt; border-top: 1px solid rgba(255, 255, 255, 0.06); margin-top: 12px;">
+    Jarvis Maps AI Studio • Official System Requirements Specification • Document Version 1.0 • October 2026
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "latest_version": "1.1.0",
+  "release_name": "Jarvis Maps AI — Professional Windows Edition",
+  "release_date": "2026-10-08",
+  "download_url": "http://localhost:8080/JarvisMapsAI_Setup_v1.1.exe",
+  "changelog": [
+    "Fresh zero-history database automatically generated on first launch",
+    "All POIs, boundary screenshots, GeoTIFFs, and maps route directly to user Downloads folder",
+    "Hardware-bound license security and cloud IP blacklist protection",
+    "High-speed Boundary Tracer with multi-threaded GeoTIFF line enhancement",
+    "Area Explorer with administrative hierarchical settlement discovery"
+  ],
+  "critical": false
+}

@@ -1,0 +1,25 @@
+[Unit]
+Description=Jarvis Maps AI Cloud License & Security Gateway
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/jarvismaps
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=-/opt/jarvismaps/server/config/production.env
+ExecStart=/opt/jarvismaps/venv/bin/python server/license_server.py 8081
+Restart=always
+RestartSec=5s
+KillMode=process
+
+# Sandboxing and Security
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

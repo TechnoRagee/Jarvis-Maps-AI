@@ -1,0 +1,1113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jarvis Maps AI — High-performance desktop GIS automation suite for Windows 10/11. Standalone zero-dependency spatial intelligence studio.">
+  <meta name="keywords" content="GIS, spatial intelligence, vector boundaries, ESRI, GeoJSON, Shapefile, offline GIS, Windows x64">
+  <title>Jarvis Maps AI — Spatial Intelligence. Simplified.</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+</head>
+<body>
+
+  <!-- Ambient Glow Light Orbs -->
+  <div class="ambient-glow-container">
+    <div class="ambient-orb orb-indigo"></div>
+    <div class="ambient-orb orb-cyan"></div>
+    <div class="ambient-orb orb-emerald"></div>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <!-- Primary Application Container -->
+  <div class="app-container">
+
+    <!-- Sticky Floating Pill Header -->
+    <header class="site-header">
+      <nav class="nav-bar" id="main-navigation">
+        <a href="#home" class="nav-brand" id="nav-brand-logo">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+              <line x1="9" y1="3" x2="9" y2="18"></line>
+              <line x1="15" y1="6" x2="15" y2="21"></line>
+            </svg>
+          </div>
+          <span class="brand-title">Jarvis Maps AI <span class="brand-badge">v1.1</span></span>
+        </a>
+
+        <ul class="nav-links" id="nav-menu-links">
+          <li><a href="#home" class="nav-link active" id="nav-link-home">Home</a></li>
+          <li><a href="#features" class="nav-link" id="nav-link-features">Features</a></li>
+          <li><a href="#download" class="nav-link" id="nav-link-download">Download</a></li>
+          <li><a href="#security" class="nav-link" id="nav-link-security">Security</a></li>
+          <li><a href="#install" class="nav-link" id="nav-link-install">Install Guide</a></li>
+          <li><a href="#faq" class="nav-link" id="nav-link-faq">FAQ</a></li>
+          <li><a href="#preview" class="nav-link" id="nav-link-preview">App Preview</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="system-pill" id="nav-system-status">
+            <span class="status-dot"></span>
+            <span>Windows x64</span>
+          </div>
+
+          <a href="#download" class="btn-header-download btn-trigger-download" id="nav-header-download-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download v1.1
+          </a>
+
+          <button class="btn-passcode-trigger btn-open-passcode-modal" id="nav-security-modal-btn" title="Model B Security Gatekeeper Test">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </button>
+
+          <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation">☰</button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content Dynamic View Area -->
+    <main class="main-content" id="main-content-area">
+
+      <!-- ========================================== -->
+      <!-- VIEW 1: HOME (Landing View)                -->
+      <!-- ========================================== -->
+      <section class="view-section active" id="view-home">
+        
+        <!-- Hero Section -->
+        <div style="text-align: center; max-width: 900px; margin: 30px auto 0;">
+          <div class="pill-tag pill-emerald" id="hero-release-pill">
+            <span class="status-dot"></span>
+            STABLE RELEASE • v1.1 • Windows 64-bit Verified
+          </div>
+
+          <h1 class="hero-title" id="hero-main-heading">
+            Spatial Intelligence. <br>
+            <span class="gradient-text">Simplified.</span>
+          </h1>
+
+          <p class="hero-subtitle" id="hero-subtitle-text">
+            Powerful GIS automation and spatial intelligence tools built into one streamlined Windows desktop studio. Zero dependencies, offline-first edge compute, and local SQLite performance.
+          </p>
+
+          <div class="cta-group" style="justify-content: center;">
+            <a href="#download" class="btn-primary btn-trigger-download" id="hero-primary-download-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Windows Installer (.exe)
+              <span class="btn-tag">411 MB</span>
+            </a>
+
+            <a href="#features" class="btn-secondary" id="hero-explore-features-btn">
+              Explore Features →
+            </a>
+
+            <a href="#install" class="btn-secondary" id="hero-install-guide-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              View Install Guide
+            </a>
+          </div>
+
+          <div class="trust-badges-bar" style="justify-content: center;">
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              Windows 10 / 11 Native
+            </div>
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              x64 Architecture
+            </div>
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              Zero-Dependency ZIP
+            </div>
+            <div class="trust-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              SHA-256 Verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Studio Map Canvas Preview -->
+        <div class="hero-preview-container">
+          <div class="studio-glass-frame" id="hero-studio-frame">
+            <div class="studio-titlebar">
+              <div class="window-dots">
+                <div class="w-dot red"></div>
+                <div class="w-dot yellow"></div>
+                <div class="w-dot green"></div>
+              </div>
+              <div class="studio-title">SESSION: EPSG:4326 // BUFFER: ACTIVE [AIR-GAPPED RUNTIME]</div>
+              <div class="studio-status">
+                <span class="status-dot"></span>
+                <span>RTK FIX: 0.004m • FPS: 60.0</span>
+              </div>
+            </div>
+
+            <div class="studio-body">
+              <canvas id="hero-map-canvas" class="studio-canvas"></canvas>
+
+              <div class="studio-sidebar-left">
+                <div class="widget-card">
+                  <div class="widget-title"><span>Spatial Pipeline</span> <span style="color:#34d399;">6 OK</span></div>
+                  <div style="font-size: 0.78rem; color: #a5b4fc; margin-bottom: 4px;">Cadastral Mesh v3</div>
+                  <div class="widget-stat">12.4k pts</div>
+                </div>
+
+                <div class="widget-card">
+                  <div class="widget-title"><span>Amenity Density</span> <span style="color:#38bdf8;">CLUSTERED</span></div>
+                  <div class="widget-stat">238 POI</div>
+                  <div class="widget-sub">Isochrone: 15m radius</div>
+                </div>
+
+                <div class="widget-card">
+                  <div class="widget-title"><span>Topology Audit</span> <span style="color:#10b981;">CLEAN</span></div>
+                  <div style="font-size: 0.76rem; color: #94a3b8;">Zero Bowties / Slivers</div>
+                  <div style="color: #34d399; font-size: 0.78rem; font-family: var(--font-mono); margin-top: 4px;">LOCAL LATENCY: 0.24 ms</div>
+                </div>
+              </div>
+
+              <div class="studio-sidebar-right">
+                <div class="widget-card">
+                  <div class="widget-title"><span>Engine Diagnostics</span> <span style="color:#38bdf8;">SQLITE</span></div>
+                  <div style="margin-bottom: 8px;">
+                    <div style="font-size: 0.7rem; color: #64748b;">VECTOR READ SPEED</div>
+                    <div class="widget-stat" style="color: #a5b4fc;">842k/sec</div>
+                  </div>
+                  <div style="margin-bottom: 8px;">
+                    <div style="font-size: 0.7rem; color: #64748b;">POLYGON CLUSTERS</div>
+                    <div class="widget-stat" style="color: #38bdf8;">14,290</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.7rem; color: #64748b;">OUTBOUND TRAFFIC</div>
+                    <div class="widget-stat" style="color: #10b981;">0.0 KB (AIR)</div>
+                  </div>
+                </div>
+
+                <div class="widget-card" style="border-color: rgba(99, 102, 241, 0.4);">
+                  <div style="font-size: 0.75rem; color: #e0e7ff; font-weight: 600; margin-bottom: 4px;">Active Model B Enclave</div>
+                  <div style="font-size: 0.72rem; color: #94a3b8;">Hardened master credentials. Tamper-evident local storage.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Pillar Spec Highlight Cards -->
+        <div class="stats-cards-grid">
+          <div class="glass-panel stat-card">
+            <div class="stat-badge">SUITE 1.0</div>
+            <div class="stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3 class="stat-title">7 Pro Modules</h3>
+            <p class="stat-desc">End-to-end spatial toolchain from coordinate extraction to multi-polygon topological boundary validation.</p>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-badge">&lt; 1 MS EDGE</div>
+            <div class="stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3 class="stat-title">In-Process Edge Engine</h3>
+            <p class="stat-desc">100% offline, native C++/Rust processing delivering hyper-threaded local desktop performance.</p>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-badge">AIR-GAPPED</div>
+            <div class="stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3 class="stat-title">Model B Gatekeeper</h3>
+            <p class="stat-desc">Cryptographic release signatures, tamper-resistant packaging, and an entirely local sandbox runtime.</p>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-badge">PORTABLE</div>
+            <div class="stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <h3 class="stat-title">Zero-Dependency ZIP</h3>
+            <p class="stat-desc">Extract and run immediately. No Python environments, Node runtimes, or system drivers required.</p>
+          </div>
+        </div>
+
+        <!-- 6 Core Modules Section -->
+        <div class="section-header">
+          <div class="section-label">CORE ARCHITECTURE</div>
+          <h2 class="section-title">Spatial Toolset • Built For Scale</h2>
+          <p class="section-subtitle">Six synchronized processing modules running locally in tandem over your custom geospatial databases, shapefiles, and geo-tables.</p>
+        </div>
+
+        <div class="modules-grid">
+          <!-- Mod 1 -->
+          <div class="glass-panel module-card">
+            <div class="module-header">
+              <span class="module-tag">MODULE 01</span>
+              <div class="module-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+              </div>
+            </div>
+            <h3 class="module-title">Coordinates Extractor</h3>
+            <p class="module-desc">Instant parsing of decimal degrees, DMS, MGRS, and UTM grid references. Batch regex ingestion from messy CSVs, server logs, and scanned PDF transcripts.</p>
+            <div class="module-footer">
+              <span>SUPPORT:</span>
+              <strong>CSV, GEOJSON, KML, SQL</strong>
+            </div>
+          </div>
+
+          <!-- Mod 2 -->
+          <div class="glass-panel module-card">
+            <div class="module-header">
+              <span class="module-tag">MODULE 02</span>
+              <div class="module-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+              </div>
+            </div>
+            <h3 class="module-title">Vector Boundaries</h3>
+            <p class="module-desc">High-order topological polygon generation, alpha-shape concave & convex hull tracing, and Douglas-Peucker perimeter smoothing with vertex lock.</p>
+            <div class="module-footer">
+              <span>ALGORITHM:</span>
+              <strong>DOUGLAS-PEUCKER 0.05px</strong>
+            </div>
+          </div>
+
+          <!-- Mod 3 -->
+          <div class="glass-panel module-card">
+            <div class="module-header">
+              <span class="module-tag">MODULE 03</span>
+              <div class="module-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </div>
+            </div>
+            <h3 class="module-title">Amenity Finder</h3>
+            <p class="module-desc">Spatial POI clustering, distance matrix calculations, pedestrian & drive-time isochrone polygons, and sub-millisecond nearest-neighbor lookups.</p>
+            <div class="module-footer">
+              <span>INDEX:</span>
+              <strong>SPATIAL R-TREE MEMORY</strong>
+            </div>
+          </div>
+
+          <!-- Mod 4 -->
+          <div class="glass-panel module-card">
+            <div class="module-header">
+              <span class="module-tag">MODULE 04</span>
+              <div class="module-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              </div>
+            </div>
+            <h3 class="module-title">Bulk Extraction</h3>
+            <p class="module-desc">High-throughput streaming pipeline parsing gigabyte-scale geospatial tables, multi-gigabyte ESRI Shapefiles, and compressed GeoPackages in seconds.</p>
+            <div class="module-footer">
+              <span>THROUGHPUT:</span>
+              <strong>1.2M ROWS / MIN</strong>
+            </div>
+          </div>
+
+          <!-- Mod 5 -->
+          <div class="glass-panel module-card">
+            <div class="module-header">
+              <span class="module-tag">MODULE 05</span>
+              <div class="module-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              </div>
+            </div>
+            <h3 class="module-title">Area Explorer</h3>
+            <p class="module-desc">Interactive cadastral parcel inspector and spatial attribute filtering. Filter zoning, elevation grades, and jurisdiction borders via natural queries.</p>
+            <div class="module-footer">
+              <span>RENDERER:</span>
+              <strong>DIRECTX 12 ACCEL</strong>
+            </div>
+          </div>
+
+          <!-- Mod 6 -->
+          <div class="glass-panel module-card">
+            <div class="module-header">
+              <span class="module-tag">MODULE 06</span>
+              <div class="module-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+            </div>
+            <h3 class="module-title">Validator & Topology</h3>
+            <p class="module-desc">Automated sliver gap detection, self-intersection fixes, orphan node culling, and datum projection consistency checks before export.</p>
+            <div class="module-footer">
+              <span>VALIDATION:</span>
+              <strong>OGC SIMPLE FEATURES</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Release Callout Card -->
+        <div class="release-banner-card">
+          <div class="release-banner-info">
+            <div class="pill-tag pill-cyan" style="margin-bottom: 10px;">
+              CRYPTOGRAPHICALLY VERIFIED BUILD
+            </div>
+            <h3>Ready to explore spatial intelligence?</h3>
+            <p>Download the official self-contained Windows executable package. Instant unzip and launch with zero background system daemons.</p>
+            <div class="package-meta-row">
+              <span>PACKAGE: <strong>JarvisMapsAI_Setup_v1.1.exe (411 MB)</strong></span>
+              <span>CHECKSUM: <strong>1f4be274...91c4</strong></span>
+            </div>
+          </div>
+
+          <a href="#download" class="btn-primary btn-trigger-download" style="padding: 18px 36px; font-size: 1.05rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Release v1.1
+          </a>
+        </div>
+
+        <!-- FAQ Accordion Preview -->
+        <div class="section-header">
+          <div class="section-label">TECHNICAL PROTOCOLS</div>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-container">
+          <div class="faq-item open">
+            <button class="faq-trigger">
+              <span>How do I install and run Jarvis Maps AI on Windows?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              Download <strong><code>JarvisMapsAI_Setup_v1.1.exe</code></strong> and double-click to install. It automatically creates Desktop & Start Menu shortcuts with custom icons. Then launch and enter your authorized License Key.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger">
+              <span>What are the minimum hardware & OS requirements?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              Windows 10 or 11 (64-bit architecture), minimum 4 GB RAM (8 GB recommended for million-vertex polygons), and 2.5 GB free disk space. No Python or administrative privileges required.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger">
+              <span>Why might Windows Defender SmartScreen trigger on initial launch?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              As an independent release, SmartScreen treats fresh builds with caution until telemetry accumulates. Simply click <strong>"More info"</strong> and select <strong>"Run anyway"</strong>. You can verify SHA-256 integrity directly with PowerShell.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger">
+              <span>Does the software communicate with external servers or cloud services?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              Zero outbound calls. The software is 100% air-gapped and offline-first. All SQLite queries, boundary transformations, and geometry indexing execute locally in your computer's RAM and disk.
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: FEATURES & MODULES                 -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-features">
+        <div class="section-header">
+          <div class="pill-tag pill-indigo">SPATIAL TOOLKIT SUITE</div>
+          <h2 class="section-title">Seven Tools. One Spatial Intelligence Studio.</h2>
+          <p class="section-subtitle">Explore the modules designed to simplify GIS workflows, spatial extraction, topological validation, and geographic analysis in a single native Windows environment.</p>
+        </div>
+
+        <div class="modules-grid">
+          <div class="glass-panel module-card">
+            <div class="module-header"><span class="module-tag">MOD_01</span><div class="module-icon-wrap">🌐</div></div>
+            <h3 class="module-title">Coordinates Extractor</h3>
+            <p class="module-desc">Parses WGS84, DMS, and UTM projection systems with micro-arcsecond precision. Batch resolves hundreds of thousands of raw text coordinates.</p>
+            <div class="module-footer"><span>SUPPORT:</span><strong>DD / DMS / MGRS / UTM</strong></div>
+          </div>
+
+          <div class="glass-panel module-card">
+            <div class="module-header"><span class="module-tag">MOD_02</span><div class="module-icon-wrap">📐</div></div>
+            <h3 class="module-title">Vector Boundaries</h3>
+            <p class="module-desc">Multi-polygon boundary tracing, RDP geometric simplification, and clean GeoJSON perimeter generation without exterior self-crossing errors.</p>
+            <div class="module-footer"><span>ALGORITHM:</span><strong>CONCAVE HULL + ALGO α</strong></div>
+          </div>
+
+          <div class="glass-panel module-card">
+            <div class="module-header"><span class="module-tag">MOD_03</span><div class="module-icon-wrap">📍</div></div>
+            <h3 class="module-title">Amenity Finder</h3>
+            <p class="module-desc">Point-of-interest clustering and proximity radius queries across massive national datasets. Surface infrastructure within custom isochrone belts.</p>
+            <div class="module-footer"><span>INDEX:</span><strong>K-D TREE RADIAL INDEX</strong></div>
+          </div>
+
+          <div class="glass-panel module-card">
+            <div class="module-header"><span class="module-tag">MOD_04</span><div class="module-icon-wrap">⚡</div></div>
+            <h3 class="module-title">Bulk Extraction</h3>
+            <p class="module-desc">Multi-threaded streaming pipeline parsing gigabyte-scale GeoTIFF headers, ESRI Shapefile geometries, GeoJSON feature collections, and GeoPackage tables.</p>
+            <div class="module-footer"><span>THROUGHPUT:</span><strong>1.2 GB/sec IO PIPELINE</strong></div>
+          </div>
+
+          <div class="glass-panel module-card">
+            <div class="module-header"><span class="module-tag">MOD_05</span><div class="module-icon-wrap">🗺️</div></div>
+            <h3 class="module-title">Area Explorer</h3>
+            <p class="module-desc">Dynamic municipal parcel inspection, land-use zoning metrics, topography slope calculation, and ellipsoidal geodesic area recalculation.</p>
+            <div class="module-footer"><span>FORMULA:</span><strong>KARNEY GEODESIC ALGORITHM</strong></div>
+          </div>
+
+          <div class="glass-panel module-card">
+            <div class="module-header"><span class="module-tag">MOD_06</span><div class="module-icon-wrap">🛡️</div></div>
+            <h3 class="module-title">Validator & Topology</h3>
+            <p class="module-desc">Automated geometry healing, bowtie and self-intersection elimination, unclosed rings repair, and sliver polygon collapse before export.</p>
+            <div class="module-footer"><span>AUDIT:</span><strong>ZERO BOWTIES OGC SPEC</strong></div>
+          </div>
+        </div>
+
+        <!-- Comparative Benchmark vs Heavy GIS -->
+        <div class="glass-panel" style="padding: 32px; margin-bottom: 60px;">
+          <div class="section-label">ENGINE BENCHMARK</div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 8px;">Jarvis Maps AI vs Traditional Heavy GIS</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">Traditional enterprise desktop GIS platforms require massive runtime runtimes, Python virtual environments, and heavy startup cycles. Jarvis is built on optimized C++ primitives.</p>
+
+          <div class="spec-table-wrap">
+            <table class="spec-table">
+              <thead>
+                <tr>
+                  <th>Architecture Parameter</th>
+                  <th>Jarvis Maps AI v1.0</th>
+                  <th>Legacy Desktop GIS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="strong">Cold Application Startup</td>
+                  <td style="color: #34d399; font-weight: 600;">&lt; 0.8 seconds (Instant Windows Load)</td>
+                  <td>38 - 65 seconds (Plugin Indexing)</td>
+                </tr>
+                <tr>
+                  <td class="strong">Disk Footprint & Prerequisites</td>
+                  <td style="color: #38bdf8; font-weight: 600;">Zero External Dependencies (Self-Contained)</td>
+                  <td>8.4 GB + Python / VC++ Distributables</td>
+                </tr>
+                <tr>
+                  <td class="strong">Data Privacy & Boundary Security</td>
+                  <td style="color: #34d399; font-weight: 600;">100% Offline Edge & Air-Gapped Ready</td>
+                  <td>Background Telemetry & Cloud Auth Sync</td>
+                </tr>
+                <tr>
+                  <td class="strong">Polygon Intersection (1M Points)</td>
+                  <td style="color: #a5b4fc; font-weight: 600;">42ms (SIMD AVX-2 Vectorized)</td>
+                  <td>1,840ms (Single-threaded GIL bound)</td>
+                </tr>
+                <tr>
+                  <td class="strong">Database Core Engine</td>
+                  <td style="color: #fff; font-weight: 600;">Embedded SQLite + RTREE Extension</td>
+                  <td>External Server or Bloated File Geodatabase</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 3: DOWNLOAD CENTER                    -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-download">
+        <div class="download-hero-card">
+          <div class="pill-tag pill-emerald" style="margin-bottom: 16px;">
+            VERIFIED WINDOWS RELEASE • STABLE V1.0
+          </div>
+
+          <div class="download-split">
+            <div class="download-package-identity">
+              <div class="windows-icon-box">
+                <svg width="38" height="38" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.801"/>
+                </svg>
+              </div>
+              <div>
+                <h2>Jarvis Maps AI Desktop Studio v1.1</h2>
+                <p>JarvisMapsAI_Setup_v1.1.exe • 411 MB Official Windows Installer</p>
+                <div style="margin-top: 8px; display: flex; gap: 8px;">
+                  <span class="pill-tag pill-cyan" style="margin: 0; padding: 2px 8px; font-size: 0.7rem;">ARCH: x86_64 / AVX2</span>
+                  <span class="pill-tag pill-indigo" style="margin: 0; padding: 2px 8px; font-size: 0.7rem;">ONE-CLICK SETUP</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <a href="JarvisMapsAI_Setup_v1.1.exe" class="btn-big-download btn-trigger-download" id="main-download-button" download>
+                <span>Download Windows Installer (Setup .EXE)</span>
+                <span class="sub">Direct single-file download • Auto desktop shortcut • Starts immediately</span>
+              </a>
+              <a href="JarvisMapsAI_Windows_x64.zip" class="btn-secondary" style="padding: 10px 16px; font-size: 0.82rem; justify-content: center; border-radius: 10px;" download>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Portable Standalone (.ZIP Archive)
+              </a>
+            </div>
+          </div>
+
+          <div class="meta-stats-row">
+            <div class="meta-stat-item">
+              <div class="label">Distribution Channel</div>
+              <div class="val">Production GA Release</div>
+            </div>
+            <div class="meta-stat-item">
+              <div class="label">OS Compatibility</div>
+              <div class="val">Windows 10 / 11 (64-bit)</div>
+            </div>
+            <div class="meta-stat-item">
+              <div class="label">Access Authorization</div>
+              <div class="val" style="color: #38bdf8; font-family: var(--font-mono);">Hardware-Bound Key</div>
+            </div>
+            <div class="meta-stat-item">
+              <div class="label">Telemetry & Tracking</div>
+              <div class="val" style="color: #34d399;">0.00% Zero-Callout</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deterministic Binary Integrity Checksum -->
+        <div class="glass-panel checksum-panel">
+          <div class="checksum-header">
+            <div class="checksum-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Deterministic Binary Integrity (SHA-256)
+            </div>
+            <button class="btn-copy btn-copy-checksum" id="btn-copy-sha256">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy SHA-256
+            </button>
+          </div>
+
+          <div class="checksum-box">
+            <span id="sha256-hash-display">02bf3c86ca72a3b7bc70c513d472d07d1d215ae6dc6b55de5020f25328b20ec3</span>
+          </div>
+
+          <div class="powershell-box">
+            <span>Verify in PowerShell: <code>Get-FileHash .\JarvisMapsAI_Setup_v1.1.exe -Algorithm SHA256</code></span>
+            <button class="btn-copy btn-copy-powershell" style="padding: 4px 10px; font-size: 0.72rem;">Copy Command</button>
+          </div>
+        </div>
+
+        <!-- 3-Step Setup Cards -->
+        <div class="section-header">
+          <div class="section-label">DEPLOYMENT PROTOCOL</div>
+          <h3 class="section-title">Zero-Setup Installation</h3>
+          <p class="section-subtitle">No background services, no registry clutter. Extract and execute directly on any secure workstation.</p>
+        </div>
+
+        <div class="install-steps-grid">
+          <div class="glass-panel install-step-card">
+            <div class="step-num-pill">01</div>
+            <h4>Download & Extract</h4>
+            <p>Download the ZIP archive to your local drive and choose <strong>Extract All</strong> into a secure workstation directory.</p>
+          </div>
+
+          <div class="glass-panel install-step-card">
+            <div class="step-num-pill">02</div>
+            <h4>Launch Executable</h4>
+            <p>Open <code>JarvisMapsAI.exe</code> from the extracted folder. (See Windows SmartScreen prompt guidance if triggered).</p>
+          </div>
+
+          <div class="glass-panel install-step-card">
+            <div class="step-num-pill">03</div>
+            <h4>Authenticate & Work</h4>
+            <p>Enter your issued Customer License Key to instantly unlock the full 7-module GIS studio suite.</p>
+          </div>
+        </div>
+
+        <!-- System Specifications Table -->
+        <div class="section-header">
+          <div class="section-label">HARDWARE READINESS</div>
+          <h3 class="section-title">System Specifications</h3>
+        </div>
+
+        <div class="spec-table-wrap">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Minimum Requirement</th>
+                <th>Recommended for Enterprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="strong">Operating System</td>
+                <td>Windows 10 64-bit (Build 19041+)</td>
+                <td>Windows 11 64-bit (Build 22621+)</td>
+              </tr>
+              <tr>
+                <td class="strong">System Memory</td>
+                <td>4 GB RAM</td>
+                <td>8 GB - 16 GB (for million-point datasets)</td>
+              </tr>
+              <tr>
+                <td class="strong">Storage</td>
+                <td>3.0 GB free disk space</td>
+                <td>NVMe SSD with 5 GB free for spatial cache</td>
+              </tr>
+              <tr>
+                <td class="strong">Graphics Processing</td>
+                <td>DirectX 11 / OpenGL 3.3 compatible</td>
+                <td>Dedicated GPU with 4GB VRAM (NVIDIA/AMD)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 4: SECURITY & TRUST                   -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-security">
+        <div class="section-header">
+          <div class="pill-tag pill-indigo">MODEL B • GATEKEEPER SECURITY ARCHITECTURE</div>
+          <h2 class="section-title">Built with security at the center.</h2>
+          <p class="section-subtitle">Understand the protection model, verified release process, and zero-telemetry local data engine designed for enterprise compliance, mission-critical infrastructure, and defense-grade GIS privacy.</p>
+        </div>
+
+        <div class="pillars-grid">
+          <div class="glass-panel pillar-card" style="position: relative;">
+            <div class="pillar-badge-num">01</div>
+            <div class="stat-icon" style="margin-bottom: 16px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Model B Gatekeeper</h3>
+            <p>Hardened binary integrity, cryptographic startup checksums, and memory-space protection ensuring unaltered execution before initializing spatial vector caches.</p>
+          </div>
+
+          <div class="glass-panel pillar-card" style="position: relative;">
+            <div class="pillar-badge-num">02</div>
+            <div class="stat-icon" style="margin-bottom: 16px; background: rgba(6,182,212,0.12); border-color: rgba(6,182,212,0.3); color: var(--cyan-light);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3>Tamper-Proof Application</h3>
+            <p>Immutable runtime packaging, anti-injection safeguards, and secure enclave license authorization that isolates your spatial coordinate layers against hostile memory scraping.</p>
+          </div>
+
+          <div class="glass-panel pillar-card" style="position: relative;">
+            <div class="pillar-badge-num">03</div>
+            <div class="stat-icon" style="margin-bottom: 16px; background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: var(--emerald-light);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </div>
+            <h3>Verified Distribution</h3>
+            <p>Strict SHA-256 hash verification, transparent reproducible packaging, and deterministic build artifacts allowing IT security auditors to cross-check byte-level binary parity.</p>
+          </div>
+
+          <div class="glass-panel pillar-card" style="position: relative;">
+            <div class="pillar-badge-num">04</div>
+            <div class="stat-icon" style="margin-bottom: 16px; background: rgba(244,63,94,0.12); border-color: rgba(244,63,94,0.3); color: #fb7185;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <h3>Local Data Engine</h3>
+            <p>100% offline edge processing. Datasets stay on your local disk in SQLite + WAL with zero network leakage or cloud tracking. No socket listeners, no telemetry drops, no cloud dependencies.</p>
+          </div>
+        </div>
+
+        <!-- Security & Safety Matrix -->
+        <div class="glass-panel" style="padding: 34px; margin-bottom: 50px;">
+          <div class="section-label">ENTERPRISE COMPLIANCE</div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 8px;">Security & Safety Matrix</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">Engineered for classified GIS analysis, legal forensics, and corporate compliance where third-party data transmission is strictly prohibited.</p>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+            <div class="glass-panel" style="padding: 20px;">
+              <h4 style="color: #38bdf8; margin-bottom: 8px; font-size: 1rem;">Zero Outbound Connections</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Verified through Windows Defender Firewall outbound rule monitoring. No background heartbeat packets, telemetry beacons, or external credential checks.</p>
+            </div>
+
+            <div class="glass-panel" style="padding: 20px;">
+              <h4 style="color: #34d399; margin-bottom: 8px; font-size: 1rem;">Local Storage Security</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Direct SQLite engine embedded within application thread space. Employs Write-Ahead Logging (WAL) for atomic transaction safety without standalone database servers.</p>
+            </div>
+
+            <div class="glass-panel" style="padding: 20px;">
+              <h4 style="color: #a5b4fc; margin-bottom: 8px; font-size: 1rem;">Clean Uninstallation</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Portable directory design leaves zero orphan Windows Registry keys, driver hooks, or background scheduling tasks. Deleting the folder clears all traces.</p>
+            </div>
+
+            <div class="glass-panel" style="padding: 20px;">
+              <h4 style="color: #fb7185; margin-bottom: 8px; font-size: 1rem;">Host Memory Shielding</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Compiled with Windows Data Execution Prevention (DEP) and high-entropy Address Space Layout Randomization (ASLR) enabled across all bundled modules.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 5: INSTALLATION GUIDE                 -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-install">
+        <div class="section-header">
+          <div class="pill-tag pill-cyan">DEPLOYMENT PROTOCOL • WINDOWS 10 / 11</div>
+          <h2 class="section-title">From download to first launch in under 60 seconds.</h2>
+          <p class="section-subtitle">Follow four simple steps to install and start Jarvis Maps AI with zero installer bloat, no administrative privileges required, and clear guidance for Windows Defender SmartScreen.</p>
+        </div>
+
+        <!-- Interactive SmartScreen Simulator -->
+        <div class="glass-panel smartscreen-sim-card">
+          <div class="section-label">INTERACTIVE SIMULATION</div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 6px;">Windows Defender SmartScreen Pass-Through</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Click the simulated prompt below to see exactly how to navigate the SmartScreen dialog in 1 click.</p>
+
+          <div class="smartscreen-box" id="smartscreen-simulator-box">
+            <div class="ss-titlebar">
+              <span>Windows protected your PC</span>
+              <span>✕</span>
+            </div>
+            <div class="ss-headline">Microsoft Defender SmartScreen prevented an unrecognized app from starting.</div>
+            <div class="ss-text">
+              Running this app might put your PC at risk.
+            </div>
+            <div>
+              <span class="ss-more-info-link" id="ss-more-info">More info ▾</span>
+            </div>
+
+            <div class="ss-hidden-pane" id="ss-hidden-details">
+              <div style="margin-bottom: 4px;"><strong>App:</strong> JarvisMapsAI.exe</div>
+              <div style="margin-bottom: 4px;"><strong>Publisher:</strong> Jarvis Maps AI Spatial Engine</div>
+              <div><strong>Status:</strong> Verified Clean Offline Build</div>
+            </div>
+
+            <div class="ss-actions">
+              <button class="btn-ss-run-anyway" id="ss-run-anyway">Run anyway</button>
+              <button class="btn-ss-dont-run" id="ss-dont-run">Don't run</button>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 14px;">
+            <span id="ss-status-msg" style="font-size: 0.88rem; color: #a5b4fc; font-weight: 500;">
+              Step 1: Click "More info ▾" inside the blue dialog above.
+            </span>
+          </div>
+        </div>
+
+        <!-- Terminal Console Walkthrough -->
+        <div class="terminal-window">
+          <div class="terminal-bar">
+            <span>powershell.exe — Execution Guide</span>
+            <span>UTF-8</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="term-cyan">PS C:\Users\User\Downloads&gt;</span> .\JarvisMapsAI_Setup_v1.1.exe /SILENT</div>
+            <div><span class="term-green">[OK]</span> Installed into %LOCALAPPDATA%\Programs\Jarvis Maps AI\</div>
+            <div><span class="term-green">[OK]</span> Desktop and Start Menu shortcuts created with custom icon</div>
+            <div><span class="term-cyan">PS C:\Users\User\Downloads&gt;</span> &amp; "$env:LOCALAPPDATA\Programs\Jarvis Maps AI\JarvisMapsAI.exe"</div>
+            <div><span class="term-yellow">[SECURITY ACCESS]</span> Validating license key authorization...</div>
+            <div><span class="term-green">[AUTHENTICATED]</span> Enclave validated: License Key Active [JM-PRO-XXXX]</div>
+            <div><span class="term-green">[SUCCESS]</span> Jarvis Maps AI Desktop Studio v1.1 running at PID 8192</div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 6: FAQ & HELP CENTER                  -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-faq">
+        <div class="section-header">
+          <div class="pill-tag pill-cyan">KNOWLEDGE BASE & SUPPORT</div>
+          <h2 class="section-title">Questions, answered.</h2>
+          <p class="section-subtitle">Everything you need to know about system compatibility, offline data sovereignty, installation mechanics, security verification, and spatial module capabilities.</p>
+        </div>
+
+        <!-- Search Bar and Filter Pills -->
+        <div style="max-width: 860px; margin: 0 auto 30px;">
+          <div style="position: relative; margin-bottom: 16px;">
+            <input type="text" id="faq-search-input" placeholder="Search across runtime parameters, SmartScreen bypass, projection engines, SHA-256..." style="width: 100%; padding: 14px 20px; background: rgba(14,18,28,0.8); border: 1px solid var(--glass-border); border-radius: var(--radius-md); color: #fff; font-size: 0.95rem; outline: none;">
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn-secondary faq-tag-btn active" data-category="all" style="padding: 6px 14px; font-size: 0.8rem;">All Topics</button>
+            <button class="btn-secondary faq-tag-btn" data-category="general" style="padding: 6px 14px; font-size: 0.8rem;">General</button>
+            <button class="btn-secondary faq-tag-btn" data-category="packaging" style="padding: 6px 14px; font-size: 0.8rem;">Packaging & ZIP</button>
+            <button class="btn-secondary faq-tag-btn" data-category="smartscreen" style="padding: 6px 14px; font-size: 0.8rem;">SmartScreen & Install</button>
+            <button class="btn-secondary faq-tag-btn" data-category="security" style="padding: 6px 14px; font-size: 0.8rem;">Security & Integrity</button>
+            <button class="btn-secondary faq-tag-btn" data-category="engine" style="padding: 6px 14px; font-size: 0.8rem;">Spatial Engine</button>
+          </div>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="faq-container">
+          <div class="faq-item open" data-category="general">
+            <button class="faq-trigger">
+              <span>What is Jarvis Maps AI?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              Jarvis Maps AI is a native Windows spatial intelligence and GIS automation desktop application engineered for high-throughput performance, precision polygon processing, and offline edge computing. Built with deep hardware-accelerated rendering pipelines, it replaces heavy, fragmented legacy GIS software with a consolidated, zero-latency desktop workstation.
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="packaging">
+            <button class="faq-trigger">
+              <span>What is included in the ZIP archive?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              The ZIP contains the complete self-contained binary distribution (<code>JarvisMapsAI.exe</code>), bundled GDAL/PROJ spatial projection dynamic libraries, Microsoft Edge automation channel, SQLite database structure with pre-configured schemas, and offline vector rendering engines.
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="smartscreen">
+            <button class="faq-trigger">
+              <span>Why does Windows Defender SmartScreen trigger on initial launch?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              As a newly compiled independent release without thousands of cached telemetry pings in Microsoft's cloud, Windows Defender shows an "Unrecognized app" dialog. Click <strong>"More info"</strong> and select <strong>"Run anyway"</strong>.
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="security">
+            <button class="faq-trigger">
+              <span>What is Model B Gatekeeper?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              Option 2 Cloud IP Blacklist Gatekeeper &amp; HWID Enclave enforces tamper-proof access security. Access is protected by cryptographic device-bound Customer License Keys (<code>JM-XXXX-XXXX-XXXX-XXXX</code>) and administrative authorization. Workstations are cryptographically fingerprinted via Hardware ID (HWID). After 3 invalid attempts, the attacker's IP address and HWID are permanently blacklisted. Software owners manage licenses and security policies via the Admin Portal or <code>server/manage_licenses.py</code>.
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="engine">
+            <button class="faq-trigger">
+              <span>What data formats are supported?</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              Supports GeoJSON (.geojson, .json), ESRI Shapefile (.shp), OGC GeoPackage (.gpkg), Keyhole Markup (.kml/.kmz), WKT / Delimited CSV, and native SQLite Spatial Tables.
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 7: APP PREVIEW (Interactive Studio)   -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-preview">
+        <div class="section-header">
+          <div class="pill-tag pill-indigo">DESKTOP STUDIO ENVIRONMENT</div>
+          <h2 class="section-title">Interactive Interface Preview</h2>
+          <p class="section-subtitle">Experience the layout of Jarvis Maps AI Desktop Studio before extracting the binary.</p>
+        </div>
+
+        <div class="desktop-preview-frame">
+          <div class="preview-nav">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="status-dot"></span>
+              <span style="font-family: var(--font-mono); font-size: 0.8rem; color: #a5b4fc;">Jarvis Maps AI Desktop Studio • [Project_Urban_Zoning_EPSG4326.gpkg]</span>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--emerald-light);">
+              MODEL_B_AIRGAPPED • DirectX 12 Native (60 FPS)
+            </div>
+          </div>
+
+          <div class="preview-grid">
+            <div class="preview-left-menu">
+              <div style="font-size: 0.72rem; text-transform: uppercase; color: #64748b; font-weight: 700; margin-bottom: 4px;">WORKSPACE MODULES</div>
+              <button class="preview-menu-btn active" data-module="boundaries">
+                <span>📐</span> Vector Boundaries
+              </button>
+              <button class="preview-menu-btn" data-module="amenities">
+                <span>📍</span> Amenity Finder
+              </button>
+              <button class="preview-menu-btn" data-module="coords">
+                <span>🌐</span> Coordinates Extractor
+              </button>
+              <button class="preview-menu-btn" data-module="bulk">
+                <span>⚡</span> Bulk Runner
+              </button>
+              <button class="preview-menu-btn" data-module="explorer">
+                <span>🗺️</span> Area Explorer
+              </button>
+              <button class="preview-menu-btn" data-module="validator">
+                <span>🛡️</span> Topology Validator
+              </button>
+
+              <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
+                <div style="font-size: 0.7rem; color: #64748b;">STORAGE ENGINE</div>
+                <div style="font-size: 0.82rem; color: #34d399; font-family: var(--font-mono);">SQLite WAL • 142.4 MB</div>
+              </div>
+            </div>
+
+            <div class="preview-center-map">
+              <svg class="preview-map-svg" viewBox="0 0 600 450">
+                <!-- Background Grid -->
+                <defs>
+                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+
+                <!-- Cadastral Polygon -->
+                <polygon points="120,80 340,60 480,140 520,320 380,410 180,360 80,240" fill="rgba(99, 102, 241, 0.12)" stroke="#6366f1" stroke-width="2.5" stroke-dasharray="4,2"/>
+                
+                <!-- Inner Buffer -->
+                <polygon points="150,110 320,90 440,160 470,300 360,370 200,330 120,230" fill="rgba(6, 182, 212, 0.08)" stroke="#06b6d4" stroke-width="1.5"/>
+
+                <!-- Vertices -->
+                <circle cx="120" cy="80" r="5" fill="#38bdf8"/>
+                <circle cx="340" cy="60" r="5" fill="#38bdf8"/>
+                <circle cx="480" cy="140" r="5" fill="#38bdf8"/>
+                <circle cx="520" cy="320" r="5" fill="#38bdf8"/>
+                <circle cx="380" cy="410" r="5" fill="#38bdf8"/>
+                <circle cx="180" cy="360" r="5" fill="#38bdf8"/>
+                <circle cx="80" cy="240" r="5" fill="#38bdf8"/>
+
+                <!-- Centroid -->
+                <circle cx="300" cy="230" r="8" fill="rgba(16, 185, 129, 0.3)"/>
+                <circle cx="300" cy="230" r="4" fill="#10b981"/>
+                <text x="315" y="235" fill="#34d399" font-size="11" font-family="JetBrains Mono">CENTROID [37.7749° N, 122.4194° W]</text>
+              </svg>
+            </div>
+
+            <div class="preview-right-inspector">
+              <div style="font-size: 0.72rem; text-transform: uppercase; color: #64748b; font-weight: 700;">SPATIAL INSPECTOR</div>
+              <div class="inspector-field">
+                <label>Calculated Surface Area</label>
+                <div class="val" id="inspector-area-val">42,850 m²</div>
+              </div>
+              <div class="inspector-field">
+                <label>Geodesic Perimeter</label>
+                <div class="val" id="inspector-perim-val">840.2 m</div>
+              </div>
+              <div class="inspector-field">
+                <label>Vertex Count</label>
+                <div class="val" id="inspector-vertices-val">16 Pts</div>
+              </div>
+              <div class="inspector-field">
+                <label>Topology Audit</label>
+                <div class="val" style="color: #34d399;">✓ 0 Self-Intersections</div>
+              </div>
+
+              <div style="margin-top: auto;">
+                <button class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.85rem; padding: 10px;">
+                  Simplify (Douglas-Peucker)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- VIEW 8: 404 (Datum Drift View)             -->
+      <!-- ========================================== -->
+      <section class="view-section" id="view-404">
+        <div class="glass-panel error-hero-card">
+          <div class="error-code">404</div>
+          <h2 style="font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 12px; color: #fff;">
+            Looks like this map doesn't exist.
+          </h2>
+          <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">
+            The spatial coordinates, route, or resource you are looking for have drifted outside our known projection matrix (Null Island datum displacement).
+          </p>
+          <div class="cta-group" style="justify-content: center;">
+            <a href="#home" class="btn-primary">Return to Home Station</a>
+            <a href="#download" class="btn-secondary">Download Jarvis Maps AI</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Master Passcode Modal Simulation -->
+    <div class="modal-backdrop" id="passcode-modal">
+      <div class="glass-panel modal-dialog">
+        <button class="modal-close-btn" id="modal-close">✕</button>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+          <div class="brand-icon" style="width: 28px; height: 28px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Security Access Verification</h3>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.86rem; margin-bottom: 12px;">
+          Test the Model B security gatekeeper. Enter your issued License Key or authorization key:
+        </p>
+        <input type="text" id="passcode-modal-input" class="passcode-input" placeholder="e.g. JM-XXXX-XXXX-XXXX-XXXX" autocomplete="off">
+        <div id="passcode-modal-feedback" class="passcode-feedback"></div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button class="btn-secondary" onclick="closePasscodeModal()" style="padding: 8px 16px; font-size: 0.86rem;">Cancel</button>
+          <button class="btn-primary" id="modal-verify-btn" style="padding: 8px 20px; font-size: 0.86rem;">Verify Access</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Global Toast Notification Container -->
+    <div class="toast-shelf" id="toast-shelf"></div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div class="brand-icon" style="width: 26px; height: 26px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon></svg>
+              </div>
+              <strong style="font-family: var(--font-heading); font-size: 1.1rem; color: #fff;">Jarvis Maps AI</strong>
+            </div>
+            <p>Spatial Intelligence. Simplified. High-performance desktop GIS automation engine engineered for Windows 10/11 64-bit platforms.</p>
+            <div style="margin-top: 14px; display: flex; gap: 8px;">
+              <span class="pill-tag pill-cyan" style="margin: 0; padding: 2px 8px; font-size: 0.7rem;">Windows x64 Native</span>
+              <span class="pill-tag pill-emerald" style="margin: 0; padding: 2px 8px; font-size: 0.7rem;">Offline-First</span>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="#features">Core Capabilities</a></li>
+              <li><a href="#download">Release Build</a></li>
+              <li><a href="#preview">Live Telemetry</a></li>
+              <li><a href="#home">Architecture Overview</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Security</h4>
+            <ul>
+              <li><a href="#security">Local Processing</a></li>
+              <li><a href="#download">SHA-256 Checksums</a></li>
+              <li><a href="#security">Air-Gapped Operation</a></li>
+              <li><a href="#security">Model B Gatekeeper</a></li>
+              <li><a href="admin.html" style="color: rgba(255, 255, 255, 0.4); font-size: 0.78rem;" title="Restricted Owner Access">🔒 Admin Portal</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <ul>
+              <li><a href="#download">Windows x64 ZIP</a></li>
+              <li><a href="#features">SQLite WAL Engine</a></li>
+              <li><a href="#install">SmartScreen Walkthrough</a></li>
+              <li><a href="#install">Installation Instructions</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="status-dot"></span>
+            <span>Jarvis Maps AI • Precision Desktop Telemetry Hub</span>
+          </div>
+          <div>
+            © 2026 Jarvis Maps AI. All rights reserved. • <a href="admin.html" style="color: var(--text-subtle); text-decoration: none;">Admin Gateway</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

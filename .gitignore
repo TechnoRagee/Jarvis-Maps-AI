@@ -1,0 +1,71 @@
+# Added by code-review-graph
+.code-review-graph/
+
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Large Model Checkpoints & Weights
+models/*.pth
+models/*.pt
+models/*.onnx
+models/*.bin
+models/*.safetensors
+models/*.ckpt
+
+# Database & SQLite files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Binaries, Installers & Archives
+*.exe
+*.zip
+*.7z
+*.rar
+*.tar.gz
+*.iso
+*.msi
+
+# Output Directories & User-Generated Data
+output/
+scratch/
+bulk_output/
+excel_outputs/
+boundaries/
+*.xlsx
+*.xls
+*.tif
+*.tiff
+bulk_progress.json
+
+# Logs & Temporary Files
+*.log
+batch_log.txt
+log*.txt
+test.txt
+*.bak
+*.tmp
+
+# PyInstaller / Packaging build artifacts
+build/
+dist/
+*.spec
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

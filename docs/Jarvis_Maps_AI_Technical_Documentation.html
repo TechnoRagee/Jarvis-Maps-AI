@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Jarvis Maps AI - Complete Technical Documentation</title>
+<style>
+  @page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.6;
+    font-size: 13px;
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+  .cover-page {
+    page-break-after: always;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+    color: #ffffff;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  .cover-badge {
+    background: rgba(99, 102, 241, 0.25);
+    border: 1px solid #818cf8;
+    color: #c7d2fe;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .cover-title {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0 0 16px 0;
+    line-height: 1.15;
+    background: linear-gradient(to right, #ffffff, #a5b4fc, #e879f9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cover-subtitle {
+    font-size: 17px;
+    color: #cbd5e1;
+    max-width: 650px;
+    margin: 0 0 40px 0;
+    font-weight: 300;
+  }
+  .cover-meta {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 24px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+  .cover-meta div strong {
+    display: block;
+    color: #f8fafc;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    page-break-after: avoid;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    border-left: 4px solid #6366f1;
+    padding-left: 10px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    page-break-after: avoid;
+  }
+  p, li {
+    color: #334155;
+    font-size: 13px;
+  }
+  ul, ol {
+    padding-left: 24px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+  }
+  li {
+    margin-bottom: 4px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 12px;
+    page-break-inside: avoid;
+  }
+  th, td {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    text-align: left;
+  }
+  th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 600;
+  }
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+  
+  code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 11.5px;
+    background: #f1f5f9;
+    color: #4338ca;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+  }
+  pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 11px;
+    overflow-x: auto;
+    line-height: 1.45;
+    page-break-inside: avoid;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    border: none;
+    padding: 0;
+  }
+  
+  .callout {
+    background: #eef2ff;
+    border-left: 4px solid #4f46e5;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 12.5px;
+  }
+  .callout strong {
+    color: #312e81;
+  }
+  
+  .diagram-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    text-align: center;
+    font-family: monospace;
+    font-size: 11.5px;
+    page-break-inside: avoid;
+  }
+  
+  .flow-step {
+    display: inline-block;
+    background: #ffffff;
+    border: 1px solid #6366f1;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin: 4px;
+    font-weight: 600;
+    color: #4338ca;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .flow-arrow {
+    display: inline-block;
+    color: #94a3b8;
+    font-weight: bold;
+    margin: 0 4px;
+  }
+  
+  .page-break {
+    page-break-before: always;
+  }
+</style>
+</head>
+<body>
+
+<div class="cover-page">
+  <div class="cover-badge">Engineering Architecture & Technical Manual</div>
+  <div class="cover-title">Jarvis Maps AI</div>
+  <div class="cover-subtitle">Autonomous High-Precision Boundary Extraction, Computer Vision Polygon Reconstruction, and Geospatial Intelligence Engine</div>
+  <div class="cover-meta">
+    <div>
+      <strong>System Version</strong>
+      2.4.0 (Zero-Selenium Playwright Edition)
+    </div>
+    <div>
+      <strong>Target Platform</strong>
+      Google Maps / Web Mercator / QGIS / Earth
+    </div>
+    <div>
+      <strong>Date Generated</strong>
+      September 2026
+    </div>
+  </div>
+</div>
+
+<h1>1. Executive Architecture Overview</h1>
+<p>
+<strong>Jarvis Maps AI</strong> is an enterprise-grade autonomous geospatial boundary extraction and computer vision analysis system. The platform automates the discovery, visual capture, pixel-level contour reconstruction, and geographic transformation of administrative and locality boundaries directly from Google Maps satellite and vector cartography.
+</p>
+
+<div class="diagram-box">
+  <div class="flow-step">1. Playwright Automation</div>
+  <span class="flow-arrow">&rarr;</span>
+  <div class="flow-step">2. Unoccluded Canvas Capture</div>
+  <span class="flow-arrow">&rarr;</span>
+  <div class="flow-step">3. Adaptive Red Line Extraction</div>
+  <span class="flow-arrow">&rarr;</span>
+  <div class="flow-step">4. Graph Search & Polar Snap</div>
+  <span class="flow-arrow">&rarr;</span>
+  <div class="flow-step">5. DPR-Corrected Georeferencing</div>
+  <span class="flow-arrow">&rarr;</span>
+  <div class="flow-step">6. Multi-Format Export (GeoTIFF, KML, KMZ, GeoJSON)</div>
+</div>
+
+<p>
+The system completely replaces legacy Selenium drivers with modern, ultra-reliable <strong>Playwright Chromium automation</strong>, achieving sub-second UI interactions, reliable zoom stepping, automatic side drawer management, and pixel-perfect geographic coordinate alignment.
+</p>
+
+<h2>Key Technical Capabilities</h2>
+<ul>
+  <li><strong>100% Zero-Selenium Engine:</strong> Pure Playwright asynchronous and synchronous driver integration with native mouse drag, gesture zoom, and DOM event dispatching.</li>
+  <li><strong>Adaptive Multi-Zoom Scanning:</strong> Multi-resolution boundary probing (Zoom 15 &rarr; 14 &rarr; 13) to capture sprawling localities and micro-sectors with zero edge truncation.</li>
+  <li><strong>Dual Computer Vision Pipelines:</strong>
+    <ul>
+      <li><em>Primary:</em> Google-Red Color Space Segmentation, Polar Ray Snapping, and Target-Guided Shortest-Path Graph Search (OpenCV).</li>
+      <li><em>Secondary Fallback:</em> Deep learning Segment Anything Model (SAM) with ViT image embeddings for ambiguous or unoutlined regions.</li>
+    </ul>
+  </li>
+  <li><strong>DPR-Aware Web Mercator Mathematical Georeferencing:</strong> Converts raw screenshot canvas pixels to exact WGS84 Geographic Coordinates (<code>EPSG:4326</code>) with sub-meter accuracy.</li>
+  <li><strong>Terrain-Clamped KMZ with GroundOverlay:</strong> Packages vector boundaries with embedded satellite imagery overlays, allowing 1:1 visual verification in Google Earth Pro.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<h1>2. Repository Directory & File Structure</h1>
+<p>The workspace is modularly structured across automation, vision processing, UI, database management, and geospatial utilities:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>File / Directory</th>
+      <th>Role & Responsibility</th>
+      <th>Key Dependencies</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>playwright_pipeline.py</code></td>
+      <td><strong>Core Orchestration Engine:</strong> Manages browser lifecycle, Google Maps crawling, zoom navigation, screenshot capture, OpenCV boundary tracing, georeferencing, and multi-format spatial file generation.</td>
+      <td><code>playwright</code>, <code>cv2</code>, <code>numpy</code>, <code>scipy</code>, <code>networkx</code></td>
+    </tr>
+    <tr>
+      <td><code>frontend.py</code></td>
+      <td><strong>Interactive Web Dashboard:</strong> Streamlit-based UI for executing single/batch extractions, visualizing polygons on Folium maps, reviewing overlap conflicts, and configuring parameters.</td>
+      <td><code>streamlit</code>, <code>folium</code>, <code>streamlit_folium</code></td>
+    </tr>
+    <tr>
+      <td><code>sam_pipeline.py</code></td>
+      <td><strong>Deep Learning Fallback:</strong> Meta AI's Segment Anything Model (SAM) pipeline using prompt engineering (center points, bounding boxes) to segment land plots when no Google red outline is drawn.</td>
+      <td><code>torch</code>, <code>segment_anything</code>, <code>cv2</code></td>
+    </tr>
+    <tr>
+      <td><code>sync_boundaries.py</code></td>
+      <td><strong>Spatial Synchronization & Topology:</strong> Resolves boundary overlaps, clips multi-polygon intersections, performs topological buffering, and enforces seamless administrative tiling.</td>
+      <td><code>shapely</code>, <code>geopandas</code></td>
+    </tr>
+    <tr>
+      <td><code>main.py</code></td>
+      <td><strong>CLI Entrypoint:</strong> Command-line interface for running headless pipelines, scheduling batch crawls, and automating external integrations.</td>
+      <td><code>argparse</code>, <code>playwright_pipeline</code></td>
+    </tr>
+    <tr>
+      <td><code>utils/boundary_extractor.py</code></td>
+      <td><strong>Public API Wrapper:</strong> Exposes clean high-level functions <code>export_boundary()</code> and <code>fetch_boundary()</code> for third-party scripts.</td>
+      <td><code>playwright_pipeline</code></td>
+    </tr>
+    <tr>
+      <td><code>utils/bulk_runner.py</code></td>
+      <td><strong>Batch Processor:</strong> Multi-query queue runner supporting Excel and CSV inputs with real-time status logging and checkpoint recovery.</td>
+      <td><code>pandas</code>, <code>openpyxl</code></td>
+    </tr>
+    <tr>
+      <td><code>utils/amenity_finder.py</code></td>
+      <td><strong>Amenity Discovery:</strong> Scrapes and indexes critical local infrastructure (schools, hospitals, banks, transit) within the extracted boundary polygon.</td>
+      <td><code>requests</code>, <code>shapely</code></td>
+    </tr>
+    <tr>
+      <td><code>utils/db_handler.py</code></td>
+      <td><strong>Database Layer:</strong> SQLite persistence engine for caching extracted boundaries, metadata, camera parameters, and historical changes.</td>
+      <td><code>sqlite3</code></td>
+    </tr>
+    <tr>
+      <td><code>utils/qgis_exporter.py</code></td>
+      <td><strong>GIS Integration:</strong> Generates ready-to-use QGIS project files (<code>.qgs</code>) with styled vector layers and GeoTIFF raster connections.</td>
+      <td><code>xml.etree</code>, <code>os</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h1>3. Core Technical Pipeline & Algorithms</h1>
+
+<h2>3.1 Playwright Browser Automation & UI Management</h2>
+<p>
+Google Maps relies on dynamic JavaScript rendering, client-side WebGL canvas drawing, and asynchronous drawer cards. The automation layer in <code>playwright_pipeline.py</code> solves browser-level challenges through:
+</p>
+<ul>
+  <li><strong>Viewport Configuration:</strong> Standardized viewport dimensions (<code>1540 &times; 732 px</code>) configured at Device Pixel Ratio <code>1.25</code>, producing an exact <code>1925 &times; 915 px</code> full-resolution screenshot buffer.</li>
+  <li><strong>Active Drawer Suppression (<code>close_maps_ui</code>):</strong> Queries and clicks <code>button[aria-label*="Collapse side panel"]</code>, <code>button[jsaction*="drawer.close"]</code>, and forces CSS inline property overrides (<code>display: none !important</code>) on left search cards (<code>#pane</code>, <code>.widget-pane</code>, <code>.w6VYqd</code>). This prevents occlusion of western boundaries.</li>
+  <li><strong>Native Multi-Zoom Stepping:</strong> Visual zooming without URL reload using Playwright's native mouse wheel (<code>page.mouse.wheel(0, &plusmn;350)</code>), keyboard triggers (<code>Equal</code> / <code>Minus</code>), and on-screen zoom control clicks, coupled with camera URL hash polling (<code>@lat,lng,zoomz</code>).</li>
+</ul>
+
+<h2>3.2 OpenCV Boundary Extraction & Graph Reconstruction</h2>
+<p>
+Google Maps indicates search locality boundaries with a distinctive red/magenta dotted outline. The vision extraction pipeline isolates and reconstructs these lines through four mathematical stages:
+</p>
+
+<div class="callout">
+  <strong>HSV & RGB Color Segmentation Formula:</strong><br>
+  Pixels are classified as boundary candidates if they satisfy the strict red hue and saturation constraints:<br>
+  <code>Strict Mask = (H &isin; [340&deg;, 20&deg;]) &and; (S &ge; 0.40) &and; (V &ge; 0.45) &and; (R &gt; G + 35) &and; (R &gt; B + 35)</code>
+</div>
+
+<ol>
+  <li><strong>Morphological Filtering:</strong> Removes standalone text labels, restaurant/store circular icons, and UI artifacts while preserving thin line connectivity.</li>
+  <li><strong>Graph Representation:</strong> Converts remaining red pixel components into a mathematical network graph $G = (V, E)$. Endpoints within Euclidean gap distance $D_{gap} \le 40	ext{px}$ are connected via weighted shortest paths.</li>
+  <li><strong>Polar Coordinate Snapping:</strong> Projects rays from the searched place centroid $(x_c, y_c)$ across $360^\circ$ at angular resolution $\Delta	heta = 1.33^\circ$ (270 bins). Radial bin peaks are snapped directly to valid red pixel clusters.</li>
+  <li><strong>Exact Micro-Contour Preservation:</strong> Converts the snapped contour into WGS84 coordinates with epsilon threshold $\epsilon = \max(0.05, P 	imes 0.00004)$ and maximum vertex limit of $1500$, preserving all 500+ true road and highway curve points.</li>
+</ol>
+
+<div class="page-break"></div>
+
+<h1>4. Mathematical Georeferencing Specification</h1>
+<p>
+To transform pixel coordinates $(X_{px}, Y_{px})$ on the screenshot image to Geographic Latitude and Longitude $(\phi, \lambda)$ in WGS84 (<code>EPSG:4326</code>), the system implements an exact DPR-corrected Spherical Mercator projection.
+</p>
+
+<h2>4.1 Forward Projection (Pixels &rarr; Lat/Lng)</h2>
+<p>Given the Google Maps camera center $(\phi_c, \lambda_c)$ and zoom level $Z$:</p>
+
+<pre><code># 1. Compute World Coordinates of Camera Center (Zoom level 0 pixel space: 256x256)
+world_x_center = (lng_center + 180.0) / 360.0 * 256.0
+sin_lat = sin(radians(lat_center))
+world_y_center = (0.5 - log((1.0 + sin_lat) / (1.0 - sin_lat)) / (4.0 * pi)) * 256.0
+
+# 2. Scale Screenshot Pixels to CSS Display Pixels via DPR
+css_x = (pixel_x - image_center_x) * (1.0 / DPR)
+css_y = (pixel_y - image_center_y) * (1.0 / DPR)
+
+# 3. Compute Target Point in World Coordinate Space
+world_x = world_x_center + (css_x / (256.0 * 2^Z)) * 256.0
+world_y = world_y_center + (css_y / (256.0 * 2^Z)) * 256.0
+
+# 4. Inverse Mercator Projection to WGS84 Degrees
+longitude = (world_x / 256.0) * 360.0 - 180.0
+n = pi - 2.0 * pi * (world_y / 256.0)
+latitude = degrees(atan(sinh(n)))
+</code></pre>
+
+<h2>4.2 Ground Resolution & Scale</h2>
+<p>The ground resolution at latitude $\phi$ and zoom level $Z$ is calculated as:</p>
+<div class="callout">
+  $$S = rac{156543.03392 	imes \cos(\phi)}{2^Z 	imes 	ext{DPR}} \quad \left[rac{	ext{meters}}{	ext{pixel}}ight]$$
+  <br>
+  <em>Example (Vaishali, Lat 28.64&deg;, Zoom 15.03, DPR 1.25):</em> Ground resolution = <strong>3.28 meters / pixel</strong>.
+</div>
+
+<div class="page-break"></div>
+
+<h1>5. Output Formats & Verification in GIS Tools</h1>
+
+<p>Each successful extraction run automatically compiles and exports four complementary spatial assets in <code>boundaries/google_original/</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Format</th>
+      <th>File Extension</th>
+      <th>Primary Use Case</th>
+      <th>Key Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>GeoJSON</strong></td>
+      <td><code>.geojson</code></td>
+      <td>Web mapping (Leaflet, Mapbox, OpenLayers, PostGIS)</td>
+      <td>Standard RFC 7946 Polygon FeatureCollection containing georeferencing metadata, query properties, bounding box, and WGS84 coordinate array.</td>
+    </tr>
+    <tr>
+      <td><strong>KML</strong></td>
+      <td><code>.kml</code></td>
+      <td>Google Earth Pro vector layer</td>
+      <td>Includes <code>&lt;altitudeMode&gt;clampToGround&lt;/altitudeMode&gt;</code> and <code>&lt;tessellate&gt;1&lt;/tessellate&gt;</code> to hug 3D terrain surfaces.</td>
+    </tr>
+    <tr>
+      <td><strong>KMZ with GroundOverlay</strong></td>
+      <td><code>.kmz</code></td>
+      <td>Google Earth Pro 3D visual verification</td>
+      <td>Bundled zip archive containing the vector polygon (<code>doc.kml</code>) plus the raw georeferenced satellite image (<code>overlay.png</code>) mapped to exact <code>&lt;LatLonBox&gt;</code> coordinates.</td>
+    </tr>
+    <tr>
+      <td><strong>GeoTIFF</strong></td>
+      <td><code>.tif</code></td>
+      <td>QGIS, ArcGIS, GDAL raster analysis</td>
+      <td>High-resolution satellite raster with embedded affine transformation matrix (<code>gdal.SetGeoTransform</code>) and WGS84 Spatial Reference System (<code>EPSG:4326</code>).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>5.1 Google Earth Pro 1:1 Verification Workflow</h2>
+<ol>
+  <li>Double-click the generated <code>&lt;Query&gt;.kmz</code> file to open it in Google Earth Pro.</li>
+  <li>Under the <strong>Places</strong> panel, you will see both the <strong>Google Satellite Imagery Overlay</strong> and the <strong>Vector Boundary</strong>.</li>
+  <li>Adjust the <strong>Transparency Slider</strong> on the GroundOverlay layer to confirm 0-pixel displacement between Google's red outline and the vector polygon vertices.</li>
+</ol>
+
+<div class="page-break"></div>
+
+<h1>6. Maintenance, Diagnostics & API Integration</h1>
+
+<h2>6.1 Python API Usage</h2>
+<p>To integrate Jarvis Maps AI into custom automation pipelines, import <code>export_boundary</code> from <code>utils.boundary_extractor</code>:</p>
+
+<pre><code>from utils.boundary_extractor import export_boundary
+
+# Execute automated extraction
+result = export_boundary(
+    query="Vaishali, Ghaziabad, Uttar Pradesh",
+    output_dir="boundaries"
+)
+
+if result["status"] == "Success":
+    print(f"Extraction Successful! Extracted {result['polygon_points']} points.")
+    print(f"KML Path: {result['kml_path']}")
+    print(f"KMZ Path: {result['kmz_path']}")
+    print(f"GeoJSON Path: {result['geojson_path']}")
+    print(f"GeoTIFF Path: {result['geotiff_path']}")
+else:
+    print(f"Extraction Failed: {result['error']}")
+</code></pre>
+
+<h2>6.2 Diagnostic Reports & Failure Recovery</h2>
+<p>When an extraction encounters challenging terrain or ambiguous boundaries, comprehensive JSON reports are generated in <code>boundaries/reports/</code>:</p>
+<ul>
+  <li><code>*_georef_report.json</code>: Mathematical debug dump of camera world coordinates, scaling factors, bounding box corners, and pixel conversion metrics.</li>
+  <li><code>*_overlap_report.json</code>: Comparison against existing stored boundaries checking for duplicate or intersecting polygons.</li>
+  <li><code>*_adaptive_locality_report.json</code>: Record of multi-zoom attempts, polar ray distributions, and candidate contour scoring.</li>
+</ul>
+
+<div class="callout">
+  <strong>System Health Summary:</strong><br>
+  All legacy Selenium modules have been decommissioned. The pipeline operates entirely on Playwright Chromium with hardware-accelerated rendering and multi-threaded geometry sanitization.
+</div>
+
+</body>
+</html>

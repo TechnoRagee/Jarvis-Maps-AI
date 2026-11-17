@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jarvis Maps AI — Website UI Specification</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #090b14;
+      color: #e2e8f0;
+      line-height: 1.55;
+      font-size: 10pt;
+    }
+    
+    /* Cover Header */
+    .cover {
+      background: linear-gradient(135deg, rgba(30, 37, 56, 0.9) 0%, rgba(13, 16, 26, 0.95) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    
+    .badge {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: #a5b4fc;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 8.5pt;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    h1 {
+      font-size: 22pt;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      font-size: 11pt;
+      color: #94a3b8;
+      margin-bottom: 14px;
+    }
+    
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 12px;
+      margin-top: 8px;
+    }
+    
+    .meta-item .label {
+      font-size: 7.5pt;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .meta-item .val {
+      font-size: 9pt;
+      color: #f8fafc;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    
+    /* Sections */
+    .section {
+      background: rgba(18, 22, 34, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      page-break-inside: avoid;
+    }
+    
+    h2 {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 6px;
+    }
+    
+    h3 {
+      font-size: 10.5pt;
+      font-weight: 600;
+      color: #818cf8;
+      margin: 12px 0 6px 0;
+    }
+    
+    p {
+      color: #cbd5e1;
+      margin-bottom: 8px;
+      font-size: 9.5pt;
+    }
+    
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 8.5pt;
+    }
+    
+    th, td {
+      padding: 7px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    
+    th {
+      background: rgba(255, 255, 255, 0.04);
+      color: #a5b4fc;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 7.5pt;
+      letter-spacing: 0.04em;
+    }
+    
+    td {
+      color: #cbd5e1;
+    }
+    
+    /* Cards and Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .glass-box {
+      background: rgba(25, 30, 48, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    
+    .glass-box h4 {
+      font-size: 9.5pt;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+    
+    .glass-box p {
+      font-size: 8.5pt;
+      color: #94a3b8;
+      margin: 0;
+    }
+    
+    .tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: 600;
+    }
+    .tag-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    .tag-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .tag-indigo { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+    
+    .callout {
+      background: rgba(99, 102, 241, 0.08);
+      border-left: 3px solid #6366f1;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 9pt;
+      color: #e0e7ff;
+    }
+    
+    .preview-img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 10px 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover Section -->
+  <div class="cover">
+    <div class="badge">PROPOSAL & ARCHITECTURAL BLUEPRINT</div>
+    <h1>Jarvis Maps AI — Download Website UI Specification</h1>
+    <div class="subtitle">Design System, User Experience Wireframes & Distribution Blueprint for Windows Desktop Suite</div>
+    
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="label">UI Design Theme</div>
+        <div class="val">Dark Glassmorphism</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Target Platform</div>
+        <div class="val">Windows 10 / 11 (x64)</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Software Tier</div>
+        <div class="val">Model B (Gatekeeper)</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">Distribution Artifact</div>
+        <div class="val">JarvisMapsAI_Windows_x64.zip</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1: Executive Summary -->
+  <div class="section">
+    <h2><span>1.</span> Project Purpose & Download Architecture</h2>
+    <p>
+      The goal is to build a high-conversion, modern <strong>Dark Glassmorphism</strong> landing website that serves as the official distribution hub for <strong>Jarvis Maps AI Desktop Studio</strong>.
+    </p>
+    <p>
+      The website allows prospective clients, GIS professionals, and enterprise data teams to:
+    </p>
+    <ul>
+      <li style="margin-left: 20px; color: #cbd5e1; font-size: 9pt; margin-bottom: 4px;">Learn about the 7 spatial intelligence modules (Coordinates, Vector Boundaries, Amenities, Bulk Extraction, Area Explorer, Validator, History).</li>
+      <li style="margin-left: 20px; color: #cbd5e1; font-size: 9pt; margin-bottom: 4px;">Download the standalone distribution package directly in a single click without registration barriers.</li>
+      <li style="margin-left: 20px; color: #cbd5e1; font-size: 9pt; margin-bottom: 4px;">Receive clear, visual guidance on entering the Master Access Passcode (<strong><code>Jarvis2026!</code></strong>) and bypassing Windows SmartScreen alerts.</li>
+    </ul>
+    
+    <div class="callout">
+      <strong>Model B Security Enforcement:</strong> The downloadable executable is tamper-proof. End users cannot reset or alter passwords. Only you (the software owner) hold the hidden <kbd>Ctrl+Alt+R</kbd> shortcut and confidential Owner Recovery Key.
+    </div>
+  </div>
+
+  <!-- Section 2: Visual Mockup -->
+  <div class="section">
+    <h2><span>2.</span> Visual Design Mockup</h2>
+    <p>Rendered preview of the proposed landing website hero and glass dashboard preview:</p>
+    <img src="file:///C:/Users/User/OneDrive/Desktop/All Automations Software/Jarvis Maps AI/docs/website_ui_mockup.jpg" class="preview-img" alt="Dark Glassmorphism Website UI Mockup" />
+    <p style="font-size: 8pt; color: #64748b; text-align: center;">Figure 1: Dark Space Theme with Ambient Nebula Orbs, Translucent Glass Cards, and Dual Action CTAs.</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- Section 3: Dark Glassmorphism Design System -->
+  <div class="section">
+    <h2><span>3.</span> Dark Glassmorphism Design System</h2>
+    <p>The visual identity follows an award-winning dark glassmorphism aesthetic inspired by Linear, Apple macOS Sonoma, and Vercel.</p>
+    
+    <h3>Color Tokens & Palette</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Hex / Value</th>
+          <th>Role in UI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Background Deep</strong></td>
+          <td><code>#07090e</code></td>
+          <td>Core page background, infinite canvas depth</td>
+        </tr>
+        <tr>
+          <td><strong>Glass Card Fill</strong></td>
+          <td><code>rgba(18, 22, 34, 0.65)</code></td>
+          <td>Translucent frosted surface for feature cards</td>
+        </tr>
+        <tr>
+          <td><strong>Glass Border Glow</strong></td>
+          <td><code>rgba(255, 255, 255, 0.09)</code></td>
+          <td>Crisp hairline rim that catches ambient light</td>
+        </tr>
+        <tr>
+          <td><strong>Electric Indigo</strong></td>
+          <td><code>#6366f1</code></td>
+          <td>Primary action button, hero highlights, glow shadows</td>
+        </tr>
+        <tr>
+          <td><strong>Cyan Neon</strong></td>
+          <td><code>#06b6d4</code></td>
+          <td>Secondary gradient accents, sub-headings, badges</td>
+        </tr>
+        <tr>
+          <td><strong>Emerald Verification</strong></td>
+          <td><code>#10b981</code></td>
+          <td>Model B security verification, stable release pill</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Glassmorphism CSS Recipe</h3>
+    <div class="glass-box" style="margin-top: 8px;">
+      <pre style="color: #93c5fd; font-size: 8pt; font-family: Consolas, monospace;">
+.glass-panel {
+  background: rgba(18, 22, 34, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}</pre>
+    </div>
+  </div>
+
+  <!-- Section 4: Website Layout & Wireframe -->
+  <div class="section">
+    <h2><span>4.</span> Page Sections & Wireframe Breakdown</h2>
+    <p>The landing page consists of 6 meticulously engineered sections:</p>
+
+    <div class="grid-2">
+      <div class="glass-box">
+        <h4>1. Floating Pill Navbar</h4>
+        <p>Translucent capsule pinned to top: Logo mark, navigation anchors (Features, Security, Download), and glowing "Download v1.0" button.</p>
+      </div>
+      <div class="glass-box">
+        <h4>2. Impact Hero Section</h4>
+        <p>Pill release badge, bold gradient headline, dual CTAs (Primary Download + Passcode FAQ), and ambient lighting orbs.</p>
+      </div>
+      <div class="glass-box">
+        <h4>3. Interactive Metrics Bar</h4>
+        <p>Live stat indicators: 7 Pro Modules, In-Process Edge Engine, Model B Gatekeeper Security, Zero-Dependency Zip.</p>
+      </div>
+      <div class="glass-box">
+        <h4>4. 6-Module Feature Cards</h4>
+        <p>Frosted cards showcasing Coordinates Extractor, Boundary Tracer, Amenity Finder, Bulk Runner, Area Explorer, and Validator.</p>
+      </div>
+      <div class="glass-box">
+        <h4>5. Direct Download Station</h4>
+        <p>Prominent release card: File name, x64 architecture, verified build tag, SHA-256 integrity notice, and download button.</p>
+      </div>
+      <div class="glass-box">
+        <h4>6. SmartScreen & Security FAQ</h4>
+        <p>Two-step visual guide on bypassing Windows SmartScreen, plus passcode instructions (entering <code>Jarvis2026!</code>).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- Section 5: Download & SmartScreen UX -->
+  <div class="section">
+    <h2><span>5.</span> Download Experience & SmartScreen Walkthrough</h2>
+    <p>
+      To ensure downloaders have zero friction opening the software, the website will display an interactive <strong>Trust & Verification</strong> box directly beneath the download button:
+    </p>
+
+    <div class="grid-3">
+      <div class="glass-box" style="border-top: 2px solid #6366f1;">
+        <h4>Step 1: Download & Extract</h4>
+        <p>User clicks <strong>"Download for Windows"</strong> to receive <code>JarvisMapsAI_Windows_x64.zip</code>, right-clicks and chooses <em>Extract All</em>.</p>
+      </div>
+      <div class="glass-box" style="border-top: 2px solid #06b6d4;">
+        <h4>Step 2: Windows SmartScreen</h4>
+        <p>If Windows shows "Unknown Publisher", click <strong>"More info"</strong> followed by <strong>"Run anyway"</strong> to launch.</p>
+      </div>
+      <div class="glass-box" style="border-top: 2px solid #10b981;">
+        <h4>Step 3: Enter Passcode</h4>
+        <p>User launches <code>JarvisMapsAI.exe</code> and unlocks with master passcode <code>Jarvis2026!</code> to begin work.</p>
+      </div>
+    </div>
+
+    <h3>Technical Download Specs</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Production Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Package Name</strong></td>
+          <td><code>JarvisMapsAI_Windows_x64.zip</code></td>
+        </tr>
+        <tr>
+          <td><strong>Primary Binary</strong></td>
+          <td><code>JarvisMapsAI.exe</code></td>
+        </tr>
+        <tr>
+          <td><strong>Operating System</strong></td>
+          <td>Windows 10 / Windows 11 (64-bit Architecture)</td>
+        </tr>
+        <tr>
+          <td><strong>Browser Automation</strong></td>
+          <td>Built-in Microsoft Edge Channel (Zero user setup required)</td>
+        </tr>
+        <tr>
+          <td><strong>Database Engine</strong></td>
+          <td>Local SQLite with WAL Mode & Auto-indexing</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 6: Recommended Hosting Options -->
+  <div class="section">
+    <h2><span>6.</span> Hosting & Deployment Blueprint</h2>
+    <p>Recommended infrastructure options for deploying this dark glassmorphism website:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Platform</th>
+          <th>Hosting Cost</th>
+          <th>File Hosting Capability</th>
+          <th>Deployment Ease</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cloudflare Pages + R2</strong> (Recommended)</td>
+          <td>Free</td>
+          <td>Unlimited downloads, $0 bandwidth costs</td>
+          <td>1-Click Git connect</td>
+        </tr>
+        <tr>
+          <td><strong>Vercel + GitHub Releases</strong></td>
+          <td>Free</td>
+          <td>Host site on Vercel, link downloads to GitHub Release</td>
+          <td>Extremely fast & automated</td>
+        </tr>
+        <tr>
+          <td><strong>Netlify</strong></td>
+          <td>Free</td>
+          <td>Direct Git deploy + static assets</td>
+          <td>Instant custom domain setup</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Summary Footer -->
+  <div style="text-align: center; padding: 12px; color: #64748b; font-size: 8pt;">
+    Jarvis Maps AI Studio • Official Website UI Specification & Engineering Guide • Generated October 2026
+  </div>
+
+</body>
+</html>
