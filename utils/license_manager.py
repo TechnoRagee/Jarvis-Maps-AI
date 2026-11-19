@@ -297,7 +297,8 @@ def verify_online_license(key_or_password: str, server_url: str = None) -> dict:
         )
 
         try:
-            with urllib.request.urlopen(req, timeout=12) as response:
+            # 35-second timeout allows sleeping cloud servers (Render free-tier cold start) to spin up
+            with urllib.request.urlopen(req, timeout=35) as response:
                 result = json.loads(response.read().decode("utf-8"))
                 result["connected_server"] = base_url
                 return result
