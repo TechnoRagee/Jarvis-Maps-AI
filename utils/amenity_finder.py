@@ -635,7 +635,7 @@ def _selenium_search(
         try:
             WebDriverWait(driver, 10).until(
                 lambda d: len(
-                    d.find_elements(By.CSS_SELECTOR, "a.hfpxzc")
+                    d.find_elements(By.CSS_SELECTOR, "a.hfpxzc, a[href*='/maps/place/'], div.Nv2PK a")
                 )
                 > 0
             )
@@ -1125,11 +1125,16 @@ def _apply_gates(
 
 _HARVEST_JS = r"""
 const out = [];
-const anchors = document.querySelectorAll("a.hfpxzc");
+const seenHrefs = new Set();
+const anchors = Array.from(document.querySelectorAll("a.hfpxzc, a[href*='/maps/place/'], div.Nv2PK a[href*='/maps/place/']"));
+
 anchors.forEach(function (a) {
   const href = a.getAttribute("href") || "";
+  if (!href || href === "#" || seenHrefs.has(href)) { return; }
+  seenHrefs.add(href);
+
   let name = (a.getAttribute("aria-label") || "").trim();
-  const card = a.closest("div.Nv2PK") || a.parentElement;
+  const card = a.closest("div.Nv2PK") || a.closest("div[role='article']") || a.parentElement;
   let category = "", rating = "", address = "";
 
   if (card) {
@@ -1142,8 +1147,13 @@ anchors.forEach(function (a) {
     // 2. Resolve true place name if anchor aria-label was empty or a price tag
     const isPrice = /^[₹$€£¥]\s*[\d,]+/i.test(name) || /^Rs\.?\s*[\d,]+/i.test(name) || /^INR\s*[\d,]+/i.test(name) || /^\d+\s*[₹$€£¥]/i.test(name);
     if (!name || isPrice) {
-      const t = card.querySelector("div.qBF1Pd, div.fontHeadlineSmall");
-      if (t) { name = t.textContent.trim(); }
+      const titleElem = card.querySelector("div.qBF1Pd, div.fontHeadlineSmall, [role='heading'], h2, h3");
+      if (titleElem) {
+        const candidateTitle = titleElem.textContent.trim();
+        if (!/^[₹$€£¥]/.test(candidateTitle) && !/^Rs\.?/i.test(candidateTitle) && /[a-zA-Z\u0900-\u097F]/.test(candidateTitle)) {
+          name = candidateTitle;
+        }
+      }
     }
 
     // If still a price tag or contains no letters, skip this price badge pin
@@ -1354,26 +1364,61 @@ def _harvest_cards(driver) -> list:
     if cards:
         return cards
 
-    # Fallback: older DOM without a.hfpxzc anchors.
+    # Fallback: parse article/card blocks when anchors are structured differently
     fallback = []
-    for el in driver.find_elements(
-        By.CSS_SELECTOR,
-        "div.qBF1Pd, div.fontHeadlineSmall, span.fontHeadlineSmall",
-    ):
-        try:
-            name = el.text.strip()
-            if name and len(name) > 2:
-                fallback.append(
-                    {
+    card_elements = driver.find_elements(By.CSS_SELECTOR, "div.Nv2PK, div[role='article']")
+    if card_elements:
+        for card in card_elements:
+            try:
+                # Find place link anchor
+                link_els = card.find_elements(By.CSS_SELECTOR, "a[href*='/maps/place/'], a.hfpxzc, a")
+                href = link_els[0].get_attribute("href") if link_els else ""
+                
+                # Find real place title (avoiding price badges e.g. ₹2,940)
+                name = ""
+                title_els = card.find_elements(By.CSS_SELECTOR, "div.qBF1Pd, div.fontHeadlineSmall, [role='heading'], h2, h3")
+                for t in title_els:
+                    txt = t.text.strip()
+                    if txt and not any(p in txt for p in ("₹", "$", "Rs.", "€", "£")) and any(c.isalpha() for c in txt):
+                        name = txt
+                        break
+                if not name and link_els:
+                    aria = (link_els[0].get_attribute("aria-label") or "").strip()
+                    if aria and not any(p in aria for p in ("₹", "$", "Rs.")):
+                        name = aria
+
+                if name and len(name) > 2:
+                    fallback.append({
                         "name": name,
-                        "href": "",
+                        "href": href,
                         "category": "",
                         "rating": "",
                         "address": "",
-                    }
-                )
-        except Exception:
-            continue
+                    })
+            except Exception:
+                continue
+
+    if not fallback:
+        # Final emergency fallback for basic headings
+        for el in driver.find_elements(
+            By.CSS_SELECTOR,
+            "div.qBF1Pd, div.fontHeadlineSmall",
+        ):
+            try:
+                name = el.text.strip()
+                if name and len(name) > 2 and not any(p in name for p in ("₹", "$", "Rs.")):
+                    fallback.append(
+                        {
+                            "name": name,
+                            "href": "",
+                            "category": "",
+                            "rating": "",
+                            "address": "",
+                        }
+                    )
+            except Exception:
+                continue
+
     return fallback
 
 
@@ -1978,20 +2023,23 @@ def _qualified_place_name(display_name, area: str) -> str:
     if not parts:
         return area
 
+    # If the user did not search for an airport or station, strip out airport/railway infrastructure labels
+    if not any(term in area.lower() for term in ("airport", "station")):
+        parts = [p for p in parts if not any(t in p.lower() for t in ("airport", "aerodrome", "airfield", "railway station"))]
+
+    if not parts:
+        return area
+
+    # Prioritize the search area itself as the lead term
+    parts.sort(key=lambda p: (_normalise(area) == _normalise(p), _normalise(area) in _normalise(p)), reverse=True)
+
     keep = [parts[0]]
 
-    # The last part is normally the state, which is the strongest single
-    # disambiguator, followed by whatever district-level name precedes it.
+    # The last part is normally the state/region, which is the strongest single disambiguator
     if len(parts) >= 2:
         state = parts[-1]
-        middle = parts[1] if len(parts) > 2 else ""
-
-        seen = {_normalise(keep[0])}
-        for candidate in (middle, state):
-            clean = _normalise(candidate)
-            if candidate and clean not in seen:
-                keep.append(candidate)
-                seen.add(clean)
+        if _normalise(state) != _normalise(keep[0]):
+            keep.append(state)
 
     return ", ".join(keep)
 
@@ -2132,15 +2180,24 @@ def _resolve_area_anchor(
         geometry = candidate.get("geojson") or {}
         return geometry.get("type") in ("Polygon", "MultiPolygon")
 
-    # Rank by importance, but a slightly less prominent match that carries a
-    # real outline beats a prominent one that only has a bounding box.
-    places.sort(
-        key=lambda p: (
-            _has_outline(p),
-            float(p.get("importance", 0) or 0),
-        ),
-        reverse=True,
-    )
+    def _candidate_rank(candidate: dict) -> tuple:
+        c_class = str(candidate.get("class", "")).lower()
+        c_type = str(candidate.get("type", "")).lower()
+
+        # Reject infrastructure nodes (airport, aerodrome, station) when searching for a city/locality
+        is_infra = False
+        if "airport" not in search_query.lower() and "aerodrome" not in search_query.lower():
+            if c_class in ("aeroway", "railway") or c_type in ("aerodrome", "airport", "station", "terminal"):
+                is_infra = True
+
+        is_place = (c_class in ("boundary", "place")) and not is_infra
+        has_out = _has_outline(candidate) and not is_infra
+        importance = float(candidate.get("importance", 0) or 0)
+
+        # Place / locality first, non-infrastructure first, outline second, importance third
+        return (not is_infra, is_place, has_out, importance)
+
+    places.sort(key=_candidate_rank, reverse=True)
     place = places[0]
 
     try:
